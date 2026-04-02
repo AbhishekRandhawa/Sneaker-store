@@ -1,42 +1,108 @@
-.navbar {
-  padding: 0.6rem 0;
-  /* 🟢 Gradient ko thoda smooth banaya */
-  background: linear-gradient(90deg, #0d6efd 0%, #0044cc 100%) !important;
+/* Navbar Background - Deep Blue Gradient */
+.custom-navbar {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 0;
 }
 
-/* 🟢 Left Gap ko bharna */
-.container-fluid {
-  padding-left: 20px !important; /* Isse Branding bilkul left se start hogi */
+/* --- THE STYLISH LOGO --- */
+.stylish-logo {
+  font-family: 'Montserrat', sans-serif; /* Thoda bold aur clean font */
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  text-decoration: none !important;
+  transition: transform 0.3s ease;
 }
 
-.navbar-brand {
-  margin-right: 30px; /* Branding aur Home ke beech ka gap control karein */
-  font-size: 1.5rem;
+.the-text {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #94a3b8; /* Light gray-blue */
+  text-transform: lowercase;
+  font-style: italic;
 }
 
-.nav-link {
-  color: rgba(255, 255, 255, 0.85) !important;
+.shoe-text {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hub-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fbbf24; /* Golden Yellow */
+  background: #fbbf24;
+  background: linear-gradient(to bottom, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stylish-logo:hover {
+  transform: translateY(-2px);
+}
+
+/* --- NAV LINKS STYLE --- */
+.custom-link {
+  color: rgba(255, 255, 255, 0.8) !important;
   font-weight: 500;
-  transition: all 0.3s ease;
   position: relative;
+  transition: 0.3s;
 }
 
-.nav-link:hover, .nav-link.active {
+.custom-link:hover, .custom-link.active {
   color: #fff !important;
 }
 
-/* 🟢 Active link ke niche ki line */
-.nav-link.active::after {
+.custom-link::after {
   content: '';
   position: absolute;
-  width: 60%;
-  height: 3px;
-  background: #ffc107; /* Gold color for active line */
-  bottom: -2px;
-  left: 20%;
-  border-radius: 10px;
+  width: 0;
+  height: 2px;
+  bottom: 5px;
+  left: 50%;
+  background: #fbbf24;
+  transition: 0.3s;
+  transform: translateX(-50%);
 }
 
-.btn-danger {
-  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+.custom-link:hover::after, .custom-link.active::after {
+  width: 70%;
+}
+
+/* --- ADMIN DASHBOARD HIGHLIGHT --- */
+.admin-link {
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  color: #fbbf24 !important;
+  margin-right: 10px;
+}
+
+/* --- CART & LOGOUT --- */
+.cart-icon-wrapper:hover {
+  color: #fbbf24 !important;
+}
+
+.badge-custom {
+  font-size: 0.7rem;
+  padding: 4px 7px;
+  border: 2px solid #1e3a8a;
+}
+
+.logout-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
 }

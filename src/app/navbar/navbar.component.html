@@ -1,45 +1,43 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow">
   <div class="container-fluid px-4">
     <div class="d-flex align-items-center">
       
-      <a class="navbar-brand fw-bold fs-4 me-4" 
+      <a class="navbar-brand stylish-logo me-4" 
          [routerLink]="authService.getRole() === 'admin' ? '/admin' : '/home'">
-        The Shoe Hub
+        <span class="the-text">The</span> 
+        <span class="shoe-text">Shoe</span> 
+        <span class="hub-text">Hub</span>
       </a>
-
-      <ul class="navbar-nav d-flex flex-row">
-        
+      <ul class="navbar-nav d-flex flex-row align-items-center">
         @if (authService.getRole() === 'user') {
           <li class="nav-item">
-            <a class="nav-link px-3" routerLink="/home" routerLinkActive="active">Home</a>
+            <a class="nav-link px-3 custom-link" routerLink="/home" routerLinkActive="active">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-3" routerLink="/my-orders" routerLinkActive="active">My Orders</a>
+            <a class="nav-link px-3 custom-link" routerLink="/my-orders" routerLinkActive="active">My Orders</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-3" routerLink="/my-wishlist" routerLinkActive="active">My Wishlist</a>
+            <a class="nav-link px-3 custom-link" routerLink="/my-wishlist" routerLinkActive="active">My Wishlist</a>
           </li>
         }
 
         @if (authService.getRole() === 'admin') {
           <li class="nav-item">
-            <a class="nav-link px-3 fw-bold text-warning" routerLink="/admin" routerLinkActive="active">Admin Dashboard</a>
+            <a class="nav-link px-3 admin-link" routerLink="/admin" routerLinkActive="active">Admin Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-3" routerLink="/user-settings" routerLinkActive="active">User Settings</a>
+            <a class="nav-link px-3 custom-link" routerLink="/user-settings" routerLinkActive="active">User Settings</a>
           </li>
         }
-
       </ul>
     </div>
 
     <div class="ms-auto d-flex align-items-center">
-      
       @if (authService.getRole() === 'user') {
-        <a routerLink="/cart" class="nav-link text-white position-relative me-4">
+        <a routerLink="/cart" class="nav-link cart-icon-wrapper text-white position-relative me-4">
           <i class="bi bi-cart3 fs-4"></i>
           @if ((cartCount$ | async) !== 0) {
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark badge-custom">
               {{ cartCount$ | async }}
             </span>
           }
@@ -47,7 +45,7 @@
       }
 
       @if (authService.isuserloggedin()) {
-        <button (click)="onLogout()" class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
+        <button (click)="onLogout()" class="btn logout-btn btn-sm rounded-pill px-4 shadow-sm">
           <i class="bi bi-box-arrow-right me-1"></i> Logout
         </button>
       }
