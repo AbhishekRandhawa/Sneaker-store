@@ -1,39 +1,62 @@
-<div class="container my-5" *ngIf="product">
-    <div class="product-card shadow-lg rounded-4 overflow-hidden border-0">
-        <div class="row g-0">
-            <div class="col-md-6 bg-yellow d-flex align-items-center justify-content-center p-5 position-relative">
-                 <img [src]="product.img" class="img-fluid product-img main-shoe" [alt]="product.name">
-        <div class="brand-logo position-absolute top-0 start-0 p-4">
-           <i class="bi bi-unmatched fs-2"></i> </div>
+<div class="container my-5">
+    @if (product) {
+        <div class="product-card shadow-lg rounded-4 overflow-hidden border-0">
+            <div class="row g-0">
+                <div class="col-md-6 bg-light-gray d-flex align-items-center justify-content-center p-5 position-relative">
+                    <img [src]="product.img" class="img-fluid product-img main-shoe" [alt]="product.name">
+                    <div class="brand-logo position-absolute top-0 start-0 p-4">
+                        <i class="bi bi-unmatched fs-2 text-primary"></i>
+                    </div>
+                </div>
+
+                <div class="col-md-6 p-5 bg-white">
+                    <h2 class="fw-bold mb-0 text-dark">{{ product.name }}</h2>
+                    <p class="text-muted small mb-3">Men's Basketball Shoes</p>
+                    
+                    <div class="stars mb-3 text-warning">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star text-muted"></i>
+                    </div>
+
+                    <h6 class="fw-bold small text-uppercase letter-spacing">Infinite Support. Total Control.</h6>
+                    <p class="text-muted mb-4" style="font-size: 0.9rem; line-height: 1.6;">
+                        {{ product.desc }}
+                    </p>
+
+                    <h6 class="fw-bold mb-3">Select Size</h6>
+                    <div class="d-flex gap-2 mb-5">
+                        @for (s of sizes; track s) {
+                            <button 
+                                (click)="selectedSize = s"
+                                [class.active-size]="selectedSize === s"
+                                class="btn-size-outline">
+                                {{ s }}
+                            </button>
+                        }
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between mt-auto">
+                        <div class="price-tag">
+                            <span class="currency">₹</span>
+                            <span class="amount">{{ product.price }}</span>
+                        </div>
+                        
+                        <button 
+                        (click)="buyNow()"
+                        class="btn-buy-now shadow-sm">
+                            BUY NOW
+                        </button>
+                    </div>
+                </div>
             </div>
-
-             <div class="col-md-6 p-5 bg-white">
-        <h2 class="fw-bold mb-0">{{ product.name }}</h2>
-        <p class="text-muted small mb-3">Men's Basketball Shoes</p>
-        
-        <div class="stars mb-3 text-warning">
-          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
         </div>
-
-        <h6 class="fw-bold small">INFINITE SUPPORT. TOTAL CONTROL.</h6>
-        <p class="text-muted x-small mb-4">{{ product.desc }}</p>
-
-        <h6 class="fw-bold mb-2">Select Size</h6>
-        <div class="d-flex gap-2 mb-4">
-          <button *ngFor="let s of sizes" 
-                  (click)="selectedSize = s"
-                  [class.btn-dark]="selectedSize === s"
-                  class="btn btn-outline-secondary btn-sm size-btn">
-            {{ s }}
-          </button>
+    } @else {
+        <div class="text-center p-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-3 text-muted">Loading product details...</p>
         </div>
-         <div class="d-flex align-items-center justify-content-between mt-5">
-          <h2 class="fw-bold mb-0">₹{{ product.price }}</h2>
-          <button class="btn btn-orange btn-lg px-5 fw-bold text-white shadow">
-            BUY
-          </button>
-        </div>
+    }
 </div>
-        </div>
-        </div>
-        </div>

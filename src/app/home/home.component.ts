@@ -25,10 +25,10 @@ productlist:any[] = [];
 
 
 
-private service = inject(ProductService)
-private router = inject(Router)
-private cartservice = inject(CartService)
-private  wishlistService = inject(WishlistService)
+private service             = inject(ProductService)
+private router              = inject(Router)
+private cartservice         = inject(CartService)
+private  wishlistService    = inject(WishlistService)
 
   ngOnInit() {
     this.service.getProducts().subscribe((data: any[]) => {

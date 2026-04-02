@@ -1,0 +1,47 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <div class="title-area">
+      <h1>Admin Dashboard</h1>
+      <p>Manage your registered users from here</p>
+    </div>
+    
+    <div class="stats-badge">
+      <span class="label">Total Registered:</span>
+      <span class="count">{{ allusers.length }}</span>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="classic-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Location</th>
+          <th class="action-header">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of allusers">
+          <td class="user-name">
+            <div class="avatar">{{ user.fullName?.charAt(0) || 'U' }}</div>
+            {{ user.fullName }}
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.city || 'N/A' }}</td>
+          <td class="action-cell">
+            <button class="delete-btn" (click)="deleteuser(user.email)">
+              <i class="trash-icon"></i> Delete
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="allusers.length === 0">
+          <td colspan="4" class="no-data">
+            No users registered yet.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

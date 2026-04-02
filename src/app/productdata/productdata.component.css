@@ -1,0 +1,85 @@
+/* Container and Card */
+.product-card {
+    background: #fff;
+    min-height: 500px;
+}
+
+.bg-light-gray {
+    background-color: #f8f9fa; /* Light gray background for shoe */
+}
+
+.main-shoe {
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1));
+    transition: transform 0.5s ease;
+}
+
+.main-shoe:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Typography */
+.letter-spacing {
+    letter-spacing: 1px;
+    color: #1e293b;
+}
+
+/* Custom Size Buttons */
+.btn-size-outline {
+    border: 1px solid #e2e8f0;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #64748b;
+    transition: 0.2s;
+}
+
+.btn-size-outline:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.active-size {
+    background: #1e293b !important;
+    color: white !important;
+    border-color: #1e293b !important;
+}
+
+/* Price Section */
+.price-tag {
+    color: #0f172a;
+}
+.price-tag .currency {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-right: 2px;
+}
+.price-tag .amount {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+/* THE ORANGE BUY BUTTON - Classic & Bold */
+.btn-buy-now {
+    background: linear-gradient(135deg, #ff8c00 0%, #ff5e00 100%);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 94, 0, 0.2);
+}
+
+.btn-buy-now:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(255, 94, 0, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-buy-now:active {
+    transform: translateY(0);
+}

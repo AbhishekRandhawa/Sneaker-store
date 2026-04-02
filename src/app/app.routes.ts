@@ -11,6 +11,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { OrderComponent } from './order/order.component';
 import { AdminComponent } from './admin/admin.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SettingComponent } from './setting/setting.component';
 
 export const routes: Routes = [
   {
@@ -29,7 +30,8 @@ export const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [authGuard,roleGuard] , data: { role: 'admin' } }, 
   { path: 'my-orders', component: OrderComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, 
   { path: 'my-wishlist', component: WishlistComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, // 👈 Inpar bhi guard lagayein
-  { path: 'check-out', component: CheckoutComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, // 👈 Inpar bhi guard lagayein
+  { path: 'check-out', component: CheckoutComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } },
+  {path: "user-settings", component:SettingComponent, canActivate: [authGuard,roleGuard],data: { role: 'admin' } }, // 👈 Inpar bhi guard lagayein
   
 
   // Default redirect logic

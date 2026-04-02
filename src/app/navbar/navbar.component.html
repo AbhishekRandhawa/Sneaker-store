@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
   <div class="container-fluid px-4">
     <div class="d-flex align-items-center">
+      
       <a class="navbar-brand fw-bold fs-4 me-4" 
          [routerLink]="authService.getRole() === 'admin' ? '/admin' : '/home'">
         The Shoe Hub
@@ -8,7 +9,7 @@
 
       <ul class="navbar-nav d-flex flex-row">
         
-        <ng-container *ngIf="authService.getRole() === 'user'">
+        @if (authService.getRole() === 'user') {
           <li class="nav-item">
             <a class="nav-link px-3" routerLink="/home" routerLinkActive="active">Home</a>
           </li>
@@ -18,26 +19,32 @@
           <li class="nav-item">
             <a class="nav-link px-3" routerLink="/my-wishlist" routerLinkActive="active">My Wishlist</a>
           </li>
-        </ng-container>
+        }
 
-        <ng-container *ngIf="authService.getRole() === 'admin'">
+        @if (authService.getRole() === 'admin') {
           <li class="nav-item">
             <a class="nav-link px-3 fw-bold text-warning" routerLink="/admin" routerLinkActive="active">Admin Dashboard</a>
           </li>
-          </ng-container>
+          <li class="nav-item">
+            <a class="nav-link px-3" routerLink="/user-settings" routerLinkActive="active">User Settings</a>
+          </li>
+        }
 
       </ul>
     </div>
 
     <div class="ms-auto d-flex align-items-center">
       
-      <a *ngIf="authService.getRole() === 'user'" routerLink="/cart" class="nav-link text-white position-relative me-4">
-        <i class="bi bi-cart3 fs-4"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm" 
-              *ngIf="(cartCount$ | async) !== 0">
-          {{ cartCount$ | async }}
-        </span>
-      </a>
+      @if (authService.getRole() === 'user') {
+        <a routerLink="/cart" class="nav-link text-white position-relative me-4">
+          <i class="bi bi-cart3 fs-4"></i>
+          @if ((cartCount$ | async) !== 0) {
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
+              {{ cartCount$ | async }}
+            </span>
+          }
+        </a>
+      }
 
       @if (authService.isuserloggedin()) {
         <button (click)="onLogout()" class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
