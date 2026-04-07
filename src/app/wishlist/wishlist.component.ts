@@ -3,6 +3,7 @@ import { WishlistService } from '../wishlist.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CartService } from '../cartservices.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -14,18 +15,37 @@ import Swal from 'sweetalert2';
 export class WishlistComponent {
 
   private wishlistservice = inject(WishlistService)
+  private cartservice = inject(CartService);
   items:any[]=[]
 
     ngOnInit() {
     this.items = this.wishlistservice.getWishlistItems();
   }
 
-  moveToCart(product: any) {
-    // 1. Cart mein add karein
-    this.wishlistservice.addToWishlist(product);
-    // 2. Wishlist se remove karein
-    this.removeItem(product.id);
-  }
+ moveToCart(product: any) {
+  // 1. Cart mein add karo
+  this.cartservice.addToCart(product);
+
+  // 2. Wishlist se SILENTLY remove karo (Swal ke bina)
+  this.wishlistservice.removeFromWishlist(product.id);
+
+  // 3. UI Update karo
+  this.items = this.wishlistservice.getWishlistItems();
+
+  // 4. Success Toast dikhao
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true
+  });
+
+  Toast.fire({
+    icon: 'success',
+    title: 'Moved to Cart 🛒'
+  });
+}
 
 removeItem(id: number, productName: string = 'this item') {
   Swal.fire({

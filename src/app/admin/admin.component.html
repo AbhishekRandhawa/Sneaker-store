@@ -71,27 +71,42 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body p-4">
-        <div class="mb-3">
-          <label class="small fw-bold mb-1">Sneaker Name</label>
-          <input type="text" [(ngModel)]="productForm.name" class="form-control shadow-sm">
-        </div>
-        <div class="row mb-3">
-          <div class="col-6">
-            <label class="small fw-bold mb-1">Price (₹)</label>
-            <input type="number" [(ngModel)]="productForm.price" class="form-control shadow-sm">
+        <form [formGroup]="productForm">
+          
+          <div class="mb-3">
+            <label class="small fw-bold mb-1">Sneaker Name</label>
+            <input type="text" formControlName="name" class="form-control shadow-sm"
+                   [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+            <div class="invalid-feedback">Name is required (min 3 chars).</div>
           </div>
-          <div class="col-6">
-            <label class="small fw-bold mb-1">Image URL</label>
-            <input type="text" [(ngModel)]="productForm.img" class="form-control shadow-sm">
+
+          <div class="row mb-3">
+            <div class="col-6">
+              <label class="small fw-bold mb-1">Price (₹)</label>
+              <input type="number" formControlName="price" class="form-control shadow-sm"
+                     [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+              <div class="invalid-feedback">Enter valid price.</div>
+            </div>
+            <div class="col-6">
+              <label class="small fw-bold mb-1">Image URL</label>
+              <input type="text" formControlName="img" class="form-control shadow-sm"
+                     [class.is-invalid]="productForm.get('img')?.invalid && productForm.get('img')?.touched">
+              <div class="invalid-feedback">Image link is required.</div>
+            </div>
           </div>
-        </div>
-        <div class="mb-4">
-          <label class="small fw-bold mb-1">Description</label>
-          <textarea [(ngModel)]="productForm.des" class="form-control shadow-sm" rows="3"></textarea>
-        </div>
-        <button (click)="onSubmit()" class="btn btn-primary w-100 py-2 fw-bold" data-bs-dismiss="modal">
-          {{ onEditModeon ? 'Save Changes' : 'Add to Inventory' }}
-        </button>
+
+          <div class="mb-4">
+            <label class="small fw-bold mb-1">Description</label>
+            <textarea formControlName="des" class="form-control shadow-sm" rows="3"
+                      [class.is-invalid]="productForm.get('des')?.invalid && productForm.get('des')?.touched"></textarea>
+            <div class="invalid-feedback">Description is required.</div>
+          </div>
+
+          <button type="button" (click)="onSubmit()" class="btn btn-primary w-100 py-2 fw-bold" 
+                  [attr.data-bs-dismiss]="productForm.valid ? 'modal' : null">
+            {{ onEditModeon ? 'Save Changes' : 'Add to Inventory' }}
+          </button>
+        </form>
       </div>
     </div>
   </div>

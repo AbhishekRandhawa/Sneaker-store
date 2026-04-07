@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ProductService } from '../product.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, FormBuilder } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -10,7 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent,SidebarComponent,RouterOutlet,RouterLink,NgxPaginationModule],
+  imports: [CommonModule, FormsModule, SidebarComponent,SidebarComponent,RouterOutlet,RouterLink,NgxPaginationModule,ReactiveFormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -22,14 +22,13 @@ product:any[]=[];
 onEditModeon=false;
 
 
-productForm = {
-  id:0,
-  name:"",
-  price:0,
-  img:'',
-  des:''
-
-}
+productForm = new FormGroup({
+    id: new FormControl(0),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    price: new FormControl(0, [Validators.required, Validators.min(1)]),
+    img: new FormControl('', [Validators.required]),
+    des: new FormControl('', [Validators.required, Validators.maxLength(200)])
+  });
 
 ngOnInit(){
   this.productservice.products$.subscribe(res=>{
@@ -37,20 +36,30 @@ ngOnInit(){
   })
 }
 
-onSubmit(){
-  if(this.onEditModeon){
-    this.productservice.updateProduct({...this.productForm});
-    alert("Product updated")
-  } else(this.productservice.addProduct({...this.productForm}));
-  alert("Product Added")
-  this.resetForm();
-}
+onSubmit() {
+    // ✅ Step 2: Check if form is valid
+   if (this.productForm.invalid) {
+      this.productForm.markAllAsTouched(); // Saare error messages dikhane ke liye
+      return;
+    }
 
-onEdit(prod:any){
-  this.onEditModeon=true
-  this.productForm={...prod};
+    const formData = this.productForm.value;
 
-}
+    if (this.onEditModeon) {
+      this.productservice.updateProduct(formData as any);
+      Swal.fire('Updated', 'Product updated successfully', 'success');
+    } else {
+      this.productservice.addProduct(formData as any);
+      Swal.fire('Added', 'Product added successfully', 'success');
+    }
+    
+    this.resetForm();
+  }
+
+onEdit(prod: any) {
+    this.onEditModeon = true;
+    this.productForm.patchValue(prod); // ✅ Form mein purana data bharne ke liye
+  }
 
 isChildRouteActive(): boolean {
   // .split('?')[0] isliye taaki query parameters se farq na pade
@@ -92,8 +101,8 @@ onDelete(id: number) {
   });
 }
 
-resetForm(){
-  this.productForm = {id:0, name:'', price:0 , img:'', des:''}
-  this.onEditModeon=false
-}
+resetForm() {
+    this.productForm.reset({ id: 0, name: '', price: 0, img: '', des: '' });
+    this.onEditModeon = false;
+  }
 }
