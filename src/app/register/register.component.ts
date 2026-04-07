@@ -70,16 +70,53 @@ onfileChange(event: any) {
   }
 }
 
+// onregister() {
+//   if (this.RegisterForm.valid) {
+//     // 1. Form se naam nikaalo
+//     const userName = this.RegisterForm.value.name; 
+
+//     const isSaved = this.userService.registeruser(this.RegisterForm.value);
+
+//     if (isSaved) {
+//       // 2. Naam ko browser ki memory (LocalStorage) mein save karo
+//       localStorage.setItem('loggedUserName', userName);
+
+//       Swal.fire('Success', 'Account Created Successfully!', 'success');
+//       this.router.navigate(['/auth/login']);
+//     } else {
+//       Swal.fire('Error', 'Email already registered. Try another one.', 'error');
+//     }
+//   }
+// }
+
 onregister() {
   if (this.RegisterForm.valid) {
-    const isSaved = this.userService.registeruser(this.RegisterForm.value);
+    const userData = this.RegisterForm.value;
+    const isSaved = this.userService.registeruser(userData);
 
     if (isSaved) {
-      Swal.fire('Success', 'Account Created Successfully!', 'success');
+      // 1. LocalStorage mein save kiya
+      localStorage.setItem('loggedUserName', userData.name);
+
+      // 2. AGAR aapne AuthService mein signal banaya hai, toh usey yahan set karein
+      // this.authService.userName.set(userData.name); 
+
+      Swal.fire({
+        title: 'Success',
+        text: 'Account Created Successfully!',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+      });
+
       this.router.navigate(['/auth/login']);
     } else {
       Swal.fire('Error', 'Email already registered. Try another one.', 'error');
     }
+  } else {
+    // Agar form invalid hai toh user ko error dikhao
+    this.RegisterForm.markAllAsTouched();
+    Swal.fire('Info', 'Please fill all required fields correctly.', 'info');
   }
 }
 }

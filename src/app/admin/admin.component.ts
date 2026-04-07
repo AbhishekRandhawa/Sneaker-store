@@ -3,17 +3,21 @@ import { ProductService } from '../product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { SidebarComponent } from "../sidebar/sidebar.component";
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, SidebarComponent,SidebarComponent,RouterOutlet,RouterLink,NgxPaginationModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
 private productservice = inject(ProductService)
-
+private router = inject(Router)
+p: number = 1;
 product:any[]=[];
 onEditModeon=false;
 
@@ -46,6 +50,14 @@ onEdit(prod:any){
   this.onEditModeon=true
   this.productForm={...prod};
 
+}
+
+isChildRouteActive(): boolean {
+  // .split('?')[0] isliye taaki query parameters se farq na pade
+  const currentUrl = this.router.url.split('?')[0];
+  
+  // Agar URL sirf '/admin' hai ya '/admin/' hai, toh child active NAHI hai
+  return currentUrl !== '/admin' && currentUrl !== '/admin/';
 }
 
 onDelete(id: number) {

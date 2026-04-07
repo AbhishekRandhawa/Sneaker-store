@@ -1,19 +1,35 @@
+/* 🚀 Main Wrapper Alignment */
 .settings-container {
-  padding: 30px;
-  max-width: 1100px;
-  margin: 0 auto;
+  /* 🚀 Navbar se gap badhane ke liye margin-top 50px se 100px-110px kar dein */
+  margin-top: 15px !important; 
+  
+  /* Sidebar ke side mein sahi jagah se shuru karne ke liye padding */
+  padding: 20px 40px; 
+  
+  /* Baki alignment wahi rahegi */
+  margin-left: 0 !important; 
+  max-width: 100%;
   font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
+/* 🚀 Header Card Styling */
 .settings-header {
+  width: 100%; /* Poori width cover kare */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   background: white;
-  padding: 20px;
+  padding: 20px 25px;
   border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  
+  /* Premium accent line (Inventory se match karne ke liye) */
+  border-left: 6px solid #1e1b4b; 
 }
 
 .title-area h1 {
@@ -21,14 +37,16 @@
   font-size: 24px;
   color: #1e293b;
   font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .title-area p {
   margin: 5px 0 0;
   color: #64748b;
-  font-size: 13px;
+  font-size: 14px;
 }
 
+/* 🚀 Stats Badge Styling */
 .stats-badge {
   background: #eff6ff;
   border: 1px solid #bfdbfe;
@@ -39,18 +57,24 @@
   gap: 10px;
 }
 
+.stats-badge .label {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
 .stats-badge .count {
   font-size: 20px;
   font-weight: 800;
   color: #3b82f6;
 }
 
-/* Table Styling */
+/* 🚀 Table Card Styling */
 .table-wrapper {
+  width: 100%; /* Left se start hokar end tak failega */
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
 }
 
@@ -66,7 +90,8 @@
   font-size: 12px;
   text-transform: uppercase;
   color: #475569;
-  letter-spacing: 0.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
   border-bottom: 2px solid #f1f5f9;
 }
 
@@ -75,6 +100,7 @@
   border-bottom: 1px solid #f1f5f9;
   color: #1e293b;
   font-size: 14px;
+  vertical-align: middle;
 }
 
 .user-name {
@@ -85,38 +111,54 @@
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   background: #3b82f6;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-/* Delete Button */
+/* 🚀 Delete Button Styling */
 .delete-btn {
   background: #fee2e2;
   color: #ef4444;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .delete-btn:hover {
   background: #ef4444;
   color: white;
+  transform: translateY(-1px);
 }
 
 .no-data {
   text-align: center;
-  padding: 40px !important;
+  padding: 50px !important;
   color: #94a3b8;
   font-style: italic;
+}
+
+/* 🚀 Mobile Optimization */
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 15px;
+  }
+  .settings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
 }

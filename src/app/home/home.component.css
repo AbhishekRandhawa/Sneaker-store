@@ -20,3 +20,25 @@
 .wishlist-btn {
   z-index: 5;
 }
+
+/* Container jo image ko kaat ke rakhega zoom ke time */
+.img-container {
+  border-radius: 8px 8px 0 0;
+  background-color: #f8f9fa; /* Background color for empty space */
+}
+
+/* Default state image ki */
+.zoom-img {
+  transition: transform 0.5s ease; /* Smooth slow zoom transition */
+}
+
+/* Jab pure card (product-card) par cursor jaye, tab image zoom ho */
+.product-card:hover .zoom-img {
+  transform: scale(1.18); /* 18% badi dikhegi image */
+}
+
+/* Card thoda lift bhi karega */
+.product-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important;
+}

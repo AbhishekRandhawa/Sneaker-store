@@ -1,6 +1,6 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { UserService } from './user.service';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs'; // 👈 Observable ke liye
 
 @Injectable({
@@ -8,14 +8,26 @@ import { BehaviorSubject } from 'rxjs'; // 👈 Observable ke liye
 })
 export class AuthService {
   private router = inject(Router); 
+  userName = signal<string>(localStorage.getItem('loggedUserName') || '');
   
   // 🟢 Real-time Status Update ke liye BehaviorSubject
   private loginStatus = new BehaviorSubject<boolean>(this.isuserloggedin());
   loginStatus$ = this.loginStatus.asObservable(); // Isse Navbar subscribe karega
 
-  constructor(private userservice: UserService) { }
+  constructor(private userservice: UserService) { 
+    const savename = localStorage.getItem('userName');
+    if(savename){
+      this.userName.set(savename)
+    }
+  }
+
+setUserName(name: string) {
+    localStorage.setItem('loggedUserName', name);
+    this.userName.set(name);
+  }
 
   Login(email: string, password: string): string | null {
+
     const users = this.userservice.getregisteredUser();
     
     // 1. Admin Check
@@ -44,6 +56,9 @@ export class AuthService {
   }
 
 Logout(): void {
+
+  localStorage.removeItem('loggedUserName');
+    this.userName.set('');
     // ❌ localStorage.clear();  <-- Ye gunahgaar hai! Isse users delete ho jaate hain.
     
     // ✅ Sirf session hatayein, users ka data (Database) rehne dein.

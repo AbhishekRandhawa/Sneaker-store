@@ -1,0 +1,53 @@
+.sidebar {
+  width: 260px;
+  height: calc(100vh - 70px); /* 70px Navbar height hai */
+  background-color: #1e1b4b;
+  position: fixed;
+  left: 0;
+  top: 70px;
+  z-index: 1000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto; /* 👈 Agar screen choti hui toh scroll aayega */
+  overflow-x: hidden;
+}
+
+/* Scrollbar ko sundar banane ke liye (Optional) */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar.collapsed {
+  width: 80px !important;
+}
+.sidebar.collapsed span {
+  display: none;
+}
+
+/* Nav Links Styling */
+.nav-link {
+  border-radius: 12px;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+  background: #fbbf24 !important;
+  color: #1e1b4b !important;
+}
+
+.sidebar.collapsed .nav-link {
+  justify-content: center;
+  padding: 10px 0;
+}
+
+/* Sidebar Footer hamesha niche rahe */
+.sidebar-footer {
+  margin-top: auto; /* 👈 Ye Logout ko niche dhakelta hai */
+}

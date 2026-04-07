@@ -27,12 +27,21 @@ export const routes: Routes = [
   { path: 'cart', component: AddtocartComponent, canActivate: [authGuard,roleGuard] ,data: { role: 'user' }},
   { path: 'product/:id', component: ProductdataComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } },
   
-  { path: 'admin', component: AdminComponent, canActivate: [authGuard,roleGuard] , data: { role: 'admin' } }, 
+  // { path: 'admin', component: AdminComponent, canActivate: [authGuard,roleGuard] , data: { role: 'admin' } }, 
   { path: 'my-orders', component: OrderComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, 
   { path: 'my-wishlist', component: WishlistComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, // 👈 Inpar bhi guard lagayein
   { path: 'check-out', component: CheckoutComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } },
-  {path: "user-settings", component:SettingComponent, canActivate: [authGuard,roleGuard],data: { role: 'admin' } }, // 👈 Inpar bhi guard lagayein
-  
+  // {path: "user-settings", component:SettingComponent, canActivate: [authGuard,roleGuard],data: { role: 'admin' } }, // 👈 Inpar bhi guard lagayein
+{ 
+  path: 'admin', 
+  component: AdminComponent, 
+  canActivate: [authGuard, roleGuard], 
+  data: { role: 'admin' },
+  children: [
+    // 🚀 Isse 'admin/user-settings' active hoga
+    { path: 'user-settings', component: SettingComponent } 
+  ]
+},
 
   // Default redirect logic
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to home, guard will handle login if needed

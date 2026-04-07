@@ -18,10 +18,10 @@
 
 /* Base Body Style */
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Navbar ki height ke barabar gap dene ke liye */
+  padding-top: 85px !important; 
   margin: 0;
+  background-color: #f8fafc;
 }
 
 /* ⚠️ Ye lines baaki components ke liye automatic kaam karengi */

@@ -35,7 +35,7 @@ export class ProductdataComponent implements OnInit {
   // 3. Buy Now Function
   buyNow() {
     if (!this.selectedSize) {
-      alert('Oye! Pehle shoe size toh select kar le bhai! 👟');
+      alert('select shoes size! 👟');
       return;
     }
 

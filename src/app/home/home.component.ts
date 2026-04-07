@@ -19,7 +19,7 @@ import { FilterPipe } from '../filter.pipe';
 export class HomeComponent {
 productlist:any[] = [];
   filteredProducts: any[] = [];
- maxPrice: number = 30000;
+ maxPrice: number = 200000;
   sortOrder: string = '';
    searchText: string = '';
 

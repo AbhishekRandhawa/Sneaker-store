@@ -1,56 +1,97 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card p-3 shadow-sm border-0 bg-light">
-        <h4 class="fw-bold text-primary">{{ onEditModeon ? 'Update Product' : 'Add New Product' }}</h4>
-        <hr>
-        <div class="mb-2">
-          <label class="small fw-bold">Name</label>
-          <input type="text" [(ngModel)]="productForm.name" class="form-control" placeholder="Sneaker name...">
+<div class="admin-wrapper">
+  <app-sidebar #sidebar></app-sidebar>
+
+  <div class="main-content" [style.margin-left]="sidebar.iscolllaped ? '75px' : '260px'">
+    
+    @if (!isChildRouteActive()) {
+      <div class="container-fluid pt-5 mt-3">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white shadow-sm rounded border-start border-primary border-5">
+          <h4 class="fw-bold m-0"><i class="bi bi-box-seam me-2 text-primary"></i>Product Inventory</h4>
+          <button class="btn btn-primary rounded-pill px-4 shadow-sm" 
+                  data-bs-toggle="modal" data-bs-target="#productModal"
+                  (click)="resetForm()">
+            <i class="bi bi-plus-lg me-1"></i> Add New Sneaker
+          </button>
         </div>
-        <div class="mb-2">
-          <label class="small fw-bold">Price (₹)</label>
-          <input type="number" [(ngModel)]="productForm.price" class="form-control">
+
+        <div class="table-responsive bg-white rounded shadow-sm p-3">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Img</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p_item of product | paginate: { itemsPerPage: 5, currentPage: p }">
+                <td>
+                  <img [src]="p_item.img" width="50" height="50" class="rounded shadow-sm object-fit-cover border">
+                </td>
+                <td class="fw-bold">{{ p_item.name }}</td>
+                <td class="text-success fw-bold">₹{{ p_item.price }}</td>
+                <td class="text-center">
+                  <button (click)="onEdit(p_item)" class="btn btn-sm btn-outline-info me-2 rounded-pill px-3"
+                          data-bs-toggle="modal" data-bs-target="#productModal">
+                    <i class="bi bi-pencil-square"></i> Edit
+                  </button>
+                  <button (click)="onDelete(p_item.id)" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-center mt-3 custom-pagination">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
         </div>
-        <div class="mb-2">
-          <label class="small fw-bold">Image URL</label>
-          <input type="text" [(ngModel)]="productForm.img" class="form-control" placeholder="https://...">
-        </div>
+      </div>
+    }
+
+    @if (isChildRouteActive()) {
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    }
+
+  </div>
+</div>
+
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold">
+          {{ onEditModeon ? 'Update Product Details' : 'Add New Sneaker' }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
         <div class="mb-3">
-          <label class="small fw-bold">Description</label>
-          <textarea [(ngModel)]="productForm.des" class="form-control" rows="2"></textarea>
+          <label class="small fw-bold mb-1">Sneaker Name</label>
+          <input type="text" [(ngModel)]="productForm.name" class="form-control shadow-sm">
         </div>
-        <button (click)="onSubmit()" class="btn btn-primary w-100 shadow-sm">
+        <div class="row mb-3">
+          <div class="col-6">
+            <label class="small fw-bold mb-1">Price (₹)</label>
+            <input type="number" [(ngModel)]="productForm.price" class="form-control shadow-sm">
+          </div>
+          <div class="col-6">
+            <label class="small fw-bold mb-1">Image URL</label>
+            <input type="text" [(ngModel)]="productForm.img" class="form-control shadow-sm">
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="small fw-bold mb-1">Description</label>
+          <textarea [(ngModel)]="productForm.des" class="form-control shadow-sm" rows="3"></textarea>
+        </div>
+        <button (click)="onSubmit()" class="btn btn-primary w-100 py-2 fw-bold" data-bs-dismiss="modal">
           {{ onEditModeon ? 'Save Changes' : 'Add to Inventory' }}
         </button>
-        <button *ngIf="onEditModeon" (click)="resetForm()" class="btn btn-link w-100 text-muted mt-2">Cancel</button>
-      </div>
-    </div>
-
-    <div class="col-md-8">
-      <h4 class="fw-bold">Product Inventory</h4>
-      <div class="table-responsive mt-3">
-        <table class="table table-hover align-middle bg-white rounded shadow-sm">
-          <thead class="table-dark">
-            <tr>
-              <th>Img</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let p of product">
-              <td><img [src]="p.img" width="40" height="40" class="rounded object-fit-cover"></td>
-              <td class="fw-bold">{{ p.name }}</td>
-              <td>₹{{ p.price }}</td>
-              <td>
-                <button (click)="onEdit(p)" class="btn btn-sm btn-outline-info me-2">Edit</button>
-                <button (click)="onDelete(p.id)" class="btn btn-sm btn-outline-danger">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>

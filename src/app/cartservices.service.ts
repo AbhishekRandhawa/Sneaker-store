@@ -48,7 +48,8 @@ export class CartService {
   }
 
   addToCart(product: any) {
-    let cart = this.getCartItems();
+    let cart = this.getCartItems();                                                                         
+    
     const index = cart.findIndex((item: any) => item.id === product.id);
     if (index !== -1) {
       cart[index].quantity = (cart[index].quantity || 1) + 1;

@@ -29,13 +29,14 @@
   <div class="row">
     <div class="col-md-3 mb-4" *ngFor="let p of filteredProducts">
       
-      <div class="card shadow-sm h-100 border-0 position-relative wishlist-card" 
+      <div class="card shadow-sm h-100 border-0 position-relative wishlist-card product-card" 
            (click)="viewProduct(p.id)" 
            style="cursor: pointer; transition: transform 0.2s;">
         
-        <img [src]="p.img" class="card-img-top p-3" 
-             style="height: 200px; object-fit: contain;" [alt]="p.name">
-        
+        <div class="img-container" style="overflow: hidden;">
+          <img [src]="p.img" class="card-img-top p-3 zoom-img" 
+               style="height: 200px; object-fit: contain;" [alt]="p.name">
+        </div>
         <div class="card-body d-flex flex-column">
           <h5 class="card-title fw-bold text-truncate" title="{{ p.name }}">{{ p.name }}</h5>
           <p class="small text-muted text-truncate mb-3">{{ p.desc }}</p>

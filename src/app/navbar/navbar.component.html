@@ -1,38 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow">
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow fixed-top">
   <div class="container-fluid px-4">
+    
     <div class="d-flex align-items-center">
-      
       <a class="navbar-brand stylish-logo me-4" 
          [routerLink]="authService.getRole() === 'admin' ? '/admin' : '/home'">
         <span class="the-text">The</span> 
         <span class="shoe-text">Shoe</span> 
         <span class="hub-text">Hub</span>
       </a>
+
       <ul class="navbar-nav d-flex flex-row align-items-center">
         @if (authService.getRole() === 'user') {
           <li class="nav-item">
             <a class="nav-link px-3 custom-link" routerLink="/home" routerLinkActive="active">Home</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none d-md-block">
             <a class="nav-link px-3 custom-link" routerLink="/my-orders" routerLinkActive="active">My Orders</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none d-md-block">
             <a class="nav-link px-3 custom-link" routerLink="/my-wishlist" routerLinkActive="active">My Wishlist</a>
           </li>
         }
-
-        @if (authService.getRole() === 'admin') {
-          <li class="nav-item">
-            <a class="nav-link px-3 admin-link" routerLink="/admin" routerLinkActive="active">Admin Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3 custom-link" routerLink="/user-settings" routerLinkActive="active">User Settings</a>
-          </li>
-        }
-      </ul>
+        </ul>
     </div>
 
     <div class="ms-auto d-flex align-items-center">
+      
+      @if (authService.isuserloggedin()) {
+        <div class="user-profile-section me-4 d-none d-md-flex align-items-center">
+          <i class="bi bi-person-circle me-2 text-warning fs-5"></i>
+          <span class="text-white fw-medium">
+            Hi, <span class="user-name-highlight">{{ authService.userName() }}</span>
+          </span>
+        </div>
+      }
+
       @if (authService.getRole() === 'user') {
         <a routerLink="/cart" class="nav-link cart-icon-wrapper text-white position-relative me-4">
           <i class="bi bi-cart3 fs-4"></i>
@@ -44,7 +46,7 @@
         </a>
       }
 
-      @if (authService.isuserloggedin()) {
+      @if (authService.isuserloggedin() && authService.getRole() === 'user') {
         <button (click)="onLogout()" class="btn logout-btn btn-sm rounded-pill px-4 shadow-sm">
           <i class="bi bi-box-arrow-right me-1"></i> Logout
         </button>

@@ -3,6 +3,14 @@
   background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
   padding: 0.8rem 0;
+
+  /* 🚀 FIX: Isko top par fix karne ke liye aur z-index handle karne ke liye */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050; /* Bootstrap ke modals se niche lekin content se upar */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* --- THE STYLISH LOGO --- */
@@ -105,4 +113,9 @@
   background: #ef4444;
   color: white;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+body {
+  /* Navbar ki height lagbhag 75px-80px hai, isliye 90px gap best rahega */
+  padding-top: 90px !important; 
+  background-color: #f8fafc; /* Aapka dashboard ka light gray background */
 }
