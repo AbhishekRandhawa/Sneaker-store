@@ -11,6 +11,7 @@
     </div>
   </div>
 
+  
   <div class="sidebar-menu flex-grow-1 px-2">
    <ul class="nav nav-pills flex-column mb-auto">
   <li class="nav-item">
@@ -23,6 +24,18 @@
     <a routerLink="/admin/user-settings" routerLinkActive="active" class="nav-link text-white">
       <i class="bi bi-gear me-2"></i> 
       <span *ngIf="!iscolllaped">User Settings</span>
+    </a>
+  </li>
+    <li class="nav-item">
+    <a routerLink="/admin/chart" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="nav-link text-white">
+     <i class="bi bi-graph-up-arrow me-2"></i> 
+      <span *ngIf="!iscolllaped">Sales</span>
+    </a>
+  </li>
+    <li class="nav-item">
+    <a routerLink="/admin/bulkupload" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="nav-link text-white">
+     <i class="bi bi-cloud-arrow-up-fill me-2"></i>
+      <span *ngIf="!iscolllaped">Bulkupload</span>
     </a>
   </li>
 </ul>

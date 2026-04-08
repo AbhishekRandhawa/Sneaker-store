@@ -1,113 +1,114 @@
-<div class="register-card">
-  <div class="form-header text-center mb-4">
-    <h3 class="fw-bold">Register <span class="text-primary">User</span></h3>
-    <p class="text-muted small">Create your account to continue</p>
-  </div>
+<div class="register-wrapper d-flex align-items-center justify-content-center">
+  <div class="card register-card glass-morphism shadow-lg p-4 border-0 rounded-4">
+    <div class="form-header text-center mb-4">
+      <h3 class="fw-bold text-white">Register <span class="text-info">User</span></h3>
+      <p class="text-white-50 small">Create your account to continue</p>
+    </div>
 
-  <form [formGroup]="RegisterForm" (ngSubmit)="onregister()">
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label-sm">Full Name</label>
-        <input type="text" class="form-control" formControlName="name" placeholder="John Doe">
-          <small class="text-danger" *ngIf="RegisterForm.get('name')?.invalid && RegisterForm.get('name')?.touched">
-          Only letters allowed
-        </small>
-      </div>
-      <div class="col-md-6">
-        <label class="form-label-sm">Mobile Number</label>
-        <input type="text" class="form-control" formControlName="mobile" placeholder="9876543210">
-         <small class="text-danger" *ngIf="RegisterForm.get('mobile')?.invalid && RegisterForm.get('mobile')?.touched">
-          mobile no is required
-        </small>
-      </div>
+    <form [formGroup]="RegisterForm" (ngSubmit)="onregister()">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label-sm text-white">Full Name</label>
+          <input type="text" class="form-control glass-input" formControlName="name" placeholder="John Doe">
+          <small class="text-warning" *ngIf="RegisterForm.get('name')?.invalid && RegisterForm.get('name')?.touched">
+            Only letters allowed
+          </small>
+        </div>
 
-      <div class="col-12">
-        <label class="form-label-sm">Email Address</label>
-        <input type="email" class="form-control" formControlName="email" placeholder="example@mail.com">
-           <small class="text-danger" *ngIf="RegisterForm.get('email')?.invalid && RegisterForm.get('email')?.touched">
-          Email is required
-        </small>
-        <small class="text-danger d-block" *ngIf="RegisterForm.get('email')?.errors?.['email']">
+        <div class="col-md-6">
+          <label class="form-label-sm text-white">Mobile Number</label>
+          <input type="text" class="form-control glass-input" formControlName="mobile" placeholder="9876543210">
+          <small class="text-warning" *ngIf="RegisterForm.get('mobile')?.invalid && RegisterForm.get('mobile')?.touched">
+            Mobile no is required
+          </small>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label-sm text-white">Email Address</label>
+          <input type="email" class="form-control glass-input" formControlName="email" placeholder="example@mail.com">
+          <small class="text-warning d-block" *ngIf="RegisterForm.get('email')?.touched && RegisterForm.get('email')?.invalid">
+            Email is required
+          </small>
+          <small class="text-warning d-block" *ngIf="RegisterForm.get('email')?.errors?.['email']">
             Invalid email format
           </small>
-            <small class="text-danger d-block" *ngIf="RegisterForm.get('email')?.errors?.['emailTaken']">
+          <small class="text-warning d-block" *ngIf="RegisterForm.get('email')?.errors?.['emailTaken']">
             This email is already registered
           </small>
-      </div>
+        </div>
 
-      <div class="col-12">
-        <div formGroupName="address" class="address-compact-box">
-          <p class="fw-bold small border-bottom pb-2 mb-2 text-secondary">Location Details</p>
-          <div class="row g-2">
-            <div class="col-4">
-              <label class="small text-muted">City</label>
-              <input type="text" class="form-control form-control-sm" formControlName="city">
+        <div class="col-12">
+          <div formGroupName="address" class="address-compact-box glass-inner-box">
+            <p class="fw-bold small border-bottom border-white-50 pb-2 mb-2 text-white">Location Details</p>
+            <div class="row g-2">
+              <div class="col-4">
+                <label class="small text-white-50">City</label>
+                <input type="text" class="form-control form-control-sm glass-input" formControlName="city">
+              </div>
+              <div class="col-4">
+                <label class="small text-white-50">State</label>
+                <input type="text" class="form-control form-control-sm glass-input" formControlName="state">
+              </div>
+              <div class="col-4">
+                <label class="small text-white-50">Pin</label>
+                <input type="text" class="form-control form-control-sm glass-input" formControlName="pincode">
+              </div>
             </div>
-              <small class="text-danger" *ngIf="RegisterForm.get('address.city')?.errors?.['required'] && RegisterForm.get('address.city')?.touched">
-              City is required
-            </small>
-            <div class="col-4">
-              <label class="small text-muted">State</label>
-              <input type="text" class="form-control form-control-sm" formControlName="state">
-                 <small class="text-danger" *ngIf="RegisterForm.get('address.state')?.errors?.['required'] && RegisterForm.get('address.state')?.touched">
-              state is required
-            </small>
+            <div class="mt-1">
+              <small class="text-warning d-block" *ngIf="RegisterForm.get('address.city')?.touched && RegisterForm.get('address.city')?.invalid">City required</small>
+              <small class="text-warning d-block" *ngIf="RegisterForm.get('address.state')?.touched && RegisterForm.get('address.state')?.invalid">State required</small>
+              <small class="text-warning d-block" *ngIf="RegisterForm.get('address.pincode')?.touched && RegisterForm.get('address.pincode')?.invalid">Pin required</small>
             </div>
-            <div class="col-4">
-              <label class="small text-muted">Pin</label>
-              <input type="text" class="form-control form-control-sm" formControlName="pincode">
-                 <small class="text-danger" *ngIf="RegisterForm.get('address.pin')?.errors?.['required'] && RegisterForm.get('address.pin')?.touched">
-              Pin is required
-            </small>
-            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <label class="form-label-sm text-white">Language</label>
+          <select class="form-select glass-input" formControlName="language">
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label class="form-label-sm d-block text-white">Gender</label>
+          <div class="d-flex gap-3 mt-2 text-white">
+            <div class="form-check small"><input class="form-check-input" type="radio" value="Male" formControlName="gender"> M</div>
+            <div class="form-check small"><input class="form-check-input" type="radio" value="Female" formControlName="gender"> F</div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label-sm text-white">Password</label>
+          <input type="password" class="form-control glass-input" formControlName="password">
+          <small class="text-warning" *ngIf="RegisterForm.get('password')?.invalid && RegisterForm.get('password')?.touched">
+            Min 6 chars
+          </small>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label-sm text-white">Confirm</label>
+          <input type="password" class="form-control glass-input" formControlName="confirmPassword">
+          <small class="text-warning" *ngIf="RegisterForm.errors?.['mismatch'] && RegisterForm.get('confirmPassword')?.touched">
+            Not matching
+          </small>
+        </div>
+
+        <div class="col-12">
+          <div class="form-check my-2">
+            <input class="form-check-input" type="checkbox" formControlName="terms"> 
+            <label class="form-check-label small text-white-50">I accept Terms & Conditions</label>
           </div>
         </div>
       </div>
 
-      <div class="col-6">
-        <label class="form-label-sm">Language</label>
-        <select class="form-select" formControlName="language">
-          <option value="English">English</option>
-          <option value="Hindi">Hindi</option>
-        </select>
-           <small class="text-danger" *ngIf="RegisterForm.get('address.language')?.errors?.['required'] && RegisterForm.get('address.language')?.touched">
-              Language is required
-            </small>
+      <button type="submit" class="btn btn-light w-100 py-3 mt-3 fw-bold shadow-sm rounded-pill transition-btn" [disabled]="RegisterForm.invalid">
+        REGISTER NOW
+      </button>
+      
+      <div class="text-center mt-3">
+        <p class="small text-white-50">Already have an account? 
+          <a routerLink="/auth/login" class="text-white text-decoration-none fw-bold">Login here</a>
+        </p>
       </div>
-      <div class="col-6">
-        <label class="form-label-sm d-block">Gender</label>
-        <div class="d-flex gap-3 mt-2">
-          <div class="form-check small"><input class="form-check-input" type="radio" value="Male" formControlName="gender"> M</div>
-          <div class="form-check small"><input class="form-check-input" type="radio" value="Female" formControlName="gender"> F</div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <label class="form-label-sm">Password</label>
-        <input type="password" class="form-control" formControlName="password">
-             <small class="text-danger" *ngIf="RegisterForm.get('password')?.invalid && RegisterForm.get('password')?.touched">
-            Minimum 6 characters
-          </small>
-      </div>
-      <div class="col-md-6">
-        <label class="form-label-sm">Confirm</label>
-        <input type="password" class="form-control" formControlName="confirmPassword">
-          <small class="text-danger" *ngIf="RegisterForm.errors?.['mismatch'] && RegisterForm.get('confirmPassword')?.touched">
-            Passwords do not match
-          </small>
-      </div>
-      <div class="form-check my-4">
-  <input class="form-check-input" type="checkbox" formControlName="terms"> <label class="form-check-label small text-muted">I accept Terms & Conditions</label>
-</div>
-    </div>
-
-<button type="submit" class="btn btn-primary w-100 py-3 mt-4 fw-bold shadow">
-  REGISTER NOW
-</button>
-    <div class="text-center mt-4">
-      <p class="small text-muted">Already have an account? 
-        <a routerLink="/auth/login" class="text-primary text-decoration-none fw-bold">Login here</a>
-      </p>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

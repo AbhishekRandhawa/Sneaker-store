@@ -23,11 +23,23 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   gst: number = 4.45;
   grandtotal: number = 0;
 
+  // --- Promo Code Variables ---
+  discountAmount: number = 0;
+  promoMessage: string = '';
+  isPromoValid: boolean = false;
+  appliedPromoCode: string = '';
+  
+  // Hardcoded promo codes (Aap inhe service se bhi la sakte hain)
+  promoCodesList = [
+    { code: 'SHOES10', discount: 10 }, // 10% Off
+    { code: 'FIRST50', discount: 50 }, // 50% Off
+    { code: 'FRESHER', discount: 20 }  // 20% Off
+  ];
+  // ----------------------------
+
   stripe: any;
   cardElement: any;
   inprocessing = false;
-  
- 
   buyNowProduct: any = null;
 
   private fb = inject(FormBuilder);
@@ -37,7 +49,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   private emailService = inject(EmailService);
 
   constructor() {
-  
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { product: any, selectedSize: number };
 
@@ -48,10 +59,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    
     this.initForm();
 
-  
     if (this.buyNowProduct) {
       this.cart = [this.buyNowProduct];
       this.subtotal = this.buyNowProduct.price;
@@ -60,17 +69,54 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       this.subtotal = this.cartservice.getSubtotal();
     }
 
- 
     if (this.cart.length === 0) {
       this.router.navigate(['/home']);
       return;
     }
 
-    this.grandtotal = this.subtotal + this.gst;
+    this.calculateTotal(); // Common method for calculation
   }
 
+  // Calculation logic jisme discount minus hoga
+  calculateTotal() {
+    this.grandtotal = (this.subtotal - this.discountAmount) + this.gst;
+  }
+
+  // --- Promo Code Logic ---
+  applyPromoCode(code: string) {
+    if (!code) {
+      this.promoMessage = "Please enter a code";
+      this.isPromoValid = false;
+      return;
+    }
+
+    const found = this.promoCodesList.find(p => p.code === code.toUpperCase());
+
+    if (found) {
+      this.isPromoValid = true;
+      this.appliedPromoCode = found.code;
+      this.discountAmount = (this.subtotal * found.discount) / 100;
+      this.calculateTotal();
+      this.promoMessage = `Success! ${found.discount}% discount applied.`;
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Promo Applied',
+        text: `You saved ₹${this.discountAmount.toFixed(2)}`,
+        timer: 1500,
+        showConfirmButton: false
+      });
+    } else {
+      this.isPromoValid = false;
+      this.discountAmount = 0;
+      this.calculateTotal();
+      this.promoMessage = "Invalid or expired promo code.";
+      this.appliedPromoCode = '';
+    }
+  }
+  // -------------------------
+
   ngAfterViewInit() {
-    
     setTimeout(() => {
       if (typeof Stripe !== 'undefined') {
         this.stripe = Stripe('pk_test_51OXLkBCgTYG0LBH1TKnX4icXnEyw1xOIEJSZvAeKlmEq6RnSPbl9uqdwqY9UWKsvRJN6m3dE05ArIp6gNJ9kxpby00rl1GahFz');
@@ -140,25 +186,25 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       orderId: orderId,
       date: new Date(),
       items: [...this.cart],
+      subtotal: this.subtotal,
+      discount: this.discountAmount, // Discount details save karna acha rehta hai
+      promoCode: this.appliedPromoCode,
       total: this.grandtotal,
       paymentId: paymentId,
       status: 'Pending',
       shippingDetails: shippingDetails
     };
 
-    // Email params taiyar karein
     const emailParams = {
       to_name: `${shippingDetails.firstName} ${shippingDetails.lastName}`,
       order_id: orderId,
       total_amount: '₹' + this.grandtotal.toFixed(2),
       customer_email: shippingDetails.email,
-      message: `Aapka order successfully place ho gaya hai! Total Items: ${this.cart.length}`
+      message: `Aapka order successfully place ho gaya hai! Total Items: ${this.cart.length}. Discount: ₹${this.discountAmount}`
     };
 
-    // Order service mein save karein
-    this.orderservice.PlaceOrder(finalOrder); // Make sure OrderService has this method
+    this.orderservice.PlaceOrder(finalOrder);
 
-    // Confirmation Email
     this.emailService.sendEmailData(emailParams)
       .then(() => console.log('Email Sent Successfully!'))
       .catch((err) => console.error('Email sending failed!', err));
@@ -172,7 +218,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       timer: 3000,
       showConfirmButton: false
     }).then(() => {
-      // Order ke baad cart clear karna (sirf agar cart mode tha)
       if (!this.buyNowProduct) {
         this.cartservice.clearCart(); 
       }

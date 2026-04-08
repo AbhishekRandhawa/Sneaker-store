@@ -20,6 +20,7 @@ private router = inject(Router)
 p: number = 1;
 product:any[]=[];
 onEditModeon=false;
+selectedImagePreview: string | null = null;
 
 
 productForm = new FormGroup({
@@ -61,12 +62,41 @@ onEdit(prod: any) {
     this.productForm.patchValue(prod); // ✅ Form mein purana data bharne ke liye
   }
 
-isChildRouteActive(): boolean {
-  // .split('?')[0] isliye taaki query parameters se farq na pade
-  const currentUrl = this.router.url.split('?')[0];
+  isChildRouteActive(): boolean {
+  // router.url se current path check karte hain
+  const currentUrl = this.router.url.split('?')[0]; 
   
-  // Agar URL sirf '/admin' hai ya '/admin/' hai, toh child active NAHI hai
+  // Agar URL sirf '/admin' hai, toh returns false (yani inventory dikhao)
+  // Agar URL '/admin/user-settings' hai, toh returns true (yani settings dikhao)
   return currentUrl !== '/admin' && currentUrl !== '/admin/';
+}
+
+onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result as string;
+      
+      // 🚀 FIX: Reactive Form mein value aise set karte hain
+      this.productForm.patchValue({
+        img: base64String
+      });
+
+      this.selectedImagePreview = base64String;
+      
+      // SweetAlert Preview
+      Swal.fire({
+        title: 'Image Selected!',
+        imageUrl: this.selectedImagePreview,
+        imageAlt: 'Product Image',
+        imageHeight: 200,
+        confirmButtonText: 'Looks Good!',
+        confirmButtonColor: '#1e1b4b'
+      });
+    };
+    reader.readAsDataURL(file);
+  }
 }
 
 onDelete(id: number) {
@@ -101,8 +131,32 @@ onDelete(id: number) {
   });
 }
 
+removeImage() {
+  // 1. Form control se value hatayein
+  this.productForm.patchValue({
+    img: ''
+  });
+  
+  // 2. Preview variable ko null karein
+  this.selectedImagePreview = null;
+
+  // Optional: User ko inform karne ke liye chota alert
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true
+  });
+  Toast.fire({
+    icon: 'info',
+    title: 'Image removed'
+  });
+}
+
 resetForm() {
     this.productForm.reset({ id: 0, name: '', price: 0, img: '', des: '' });
     this.onEditModeon = false;
+    this.selectedImagePreview = null;
   }
 }

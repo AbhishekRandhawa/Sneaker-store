@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  // LocalStorage Key
   private productstoragekey = "myinventory";
-
-  // Default Data
   private defaultProducts = [];
   
-
   private productsubject: BehaviorSubject<any[]>;
   products$: Observable<any[]>;
 
@@ -19,7 +15,6 @@ export class ProductService {
     const savedProducts = localStorage.getItem(this.productstoragekey);
     const initialProducts = savedProducts ? JSON.parse(savedProducts) : this.defaultProducts;
     
-    // Agar pehli baar hai toh defaults save kar dein
     if (!savedProducts) {
       this.syncProductStorage(this.defaultProducts);
     }
@@ -28,48 +23,69 @@ export class ProductService {
     this.products$ = this.productsubject.asObservable();
   }
 
-  // --- Helpers ---
   private syncProductStorage(products: any[]) {
     localStorage.setItem(this.productstoragekey, JSON.stringify(products));
   }
 
-  // --- Admin Methods ---
+  bulkAddProducts(newProducts: any[]): Observable<boolean> {
+    try {
+      const current = this.productsubject.value;
+      let lastId = current.length > 0 ? Math.max(...current.map((p: any) => p.id)) : 0;
 
-  // 1. Naya Product Add karna
+      const formattedProducts = newProducts.map(product => {
+        lastId++;
+        return {
+          ...product,
+          id: lastId,
+          price: Number(product.price),
+          dateAdded: new Date()
+        };
+      });
+
+      const updated = [...current, ...formattedProducts];
+      this.productsubject.next(updated);
+      this.syncProductStorage(updated);
+      return of(true);
+    } catch (error) {
+      console.error("Bulk upload failed", error);
+      return of(false);
+    }
+  }
+
+  // --- FIX: Dono method rakhein taaki component ko jaisi zaroorat ho waisa data mile ---
+
+  // Yeh UI components ke liye hai jo sync rehna chahte hain (Observable)
+  getProducts(): Observable<any[]> { 
+    return this.products$; 
+  }
+
+  // Yeh Chart aur Logic ke liye hai jise turant Array chahiye (Value)
+  getProductsValue(): any[] {
+    return this.productsubject.value;
+  }
+
+  // --- Baki Methods ---
   addProduct(product: any) {
     const current = this.productsubject.value;
-    // Auto-increment ID logic
     product.id = current.length > 0 ? Math.max(...current.map((p: any) => p.id)) + 1 : 1;
-    
     const updated = [...current, product];
     this.productsubject.next(updated);
     this.syncProductStorage(updated);
   }
 
-  // 2. Product Delete karna
   deleteProduct(id: number) {
     const updated = this.productsubject.value.filter(p => p.id !== id);
     this.productsubject.next(updated);
     this.syncProductStorage(updated);
   }
 
-  // 3. Product Update/Edit karna
   updateProduct(updatedProd: any) {
     const updatedList = this.productsubject.value.map(p => p.id === updatedProd.id ? updatedProd : p);
     this.productsubject.next(updatedList);
     this.syncProductStorage(updatedList);
   }
 
-  // --- Display Methods ---
-
-  // Sabhi products get karna (Home page ke liye)
-  getProducts() { 
-    return this.products$; 
-  }
-
-  // ID se ek specific product nikalna (Product Detail page ke liye)
   getProductById(id: number) {
-    const products = this.productsubject.value;
-    return products.find(p => p.id === id);
+    return this.productsubject.value.find(p => p.id === id);
   }
 }

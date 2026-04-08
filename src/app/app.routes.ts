@@ -12,6 +12,8 @@ import { OrderComponent } from './order/order.component';
 import { AdminComponent } from './admin/admin.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SettingComponent } from './setting/setting.component';
+import { SalesComponent } from './sales/sales.component';
+import { BulkuploadComponent } from './bulkupload/bulkupload.component';
 
 export const routes: Routes = [
   {
@@ -39,7 +41,9 @@ export const routes: Routes = [
   data: { role: 'admin' },
   children: [
     // 🚀 Isse 'admin/user-settings' active hoga
-    { path: 'user-settings', component: SettingComponent } 
+    { path: 'user-settings', component: SettingComponent },
+    {path: 'chart', component:SalesComponent},
+    {path:'bulkupload', component:BulkuploadComponent}
   ]
 },
 

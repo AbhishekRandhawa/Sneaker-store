@@ -1,28 +1,61 @@
-/* Card Layout for Register */
-.register-card {
-  width: 100%;
-  min-width: 400px; /* Ye sabse important hai - isse squeeze nahi hoga */
-  background: #fff;
-  padding: 20px;
+/* Background setup */
+.register-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+    padding: 40px 0;
 }
 
-.address-compact-box {
-  background: #f8faff;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #eee;
+/* Glass Card Logic */
+.glass-morphism {
+    max-width: 650px; /* Thoda wide rakha hai because of row/cols */
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
 }
 
-.form-label-sm {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: #333;
+/* Inner Box for Address */
+.glass-inner-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Responsive fix */
-@media (max-width: 768px) {
-  .register-card {
-    min-width: 100%;
-  }
-} 
+/* Input & Select Glass Styles */
+.glass-input {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+.glass-input:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: none;
+}
+
+.glass-input option {
+    background: #4b2c9d; /* Dropdown options ke liye dark background */
+    color: white;
+}
+
+/* Button override */
+.btn-light {
+    color: #1e3a8a;
+    transition: all 0.3s ease;
+}
+
+.btn-light:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Validation color */
+.text-warning {
+    color: #ffc107 !important;
+    font-size: 0.75rem;
+}

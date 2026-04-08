@@ -1,117 +1,77 @@
-/* 1. Background Wrapper with animated gradient */
+/* 1. Main Wrapper Background (Jiske upar glass rakhenge) */
 .login-wrapper {
-  min-height: 100vh;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  padding: 20px;
+    height: 100vh;
+    width: 100%;
+    /* Ek vibrant Shoes-Hub theme ka gradient (Deep Blue to Purple) */
+    background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+    position: fixed; /* Ensures background fills screen */
+    top: 0;
+    left: 0;
 }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* 2. Glassmorphism Card Core Logic */
+.glass-morphism {
+    /* Halka white aur transparent background */
+    background: rgba(255, 255, 255, 0.1) !important; 
+    
+    /* The main blur effect (mandatory) */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    /* Patli border edges ke liye */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    
+    /* Floating feel dene ke liye deeper shadow */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* 2. Glass-morphism Card Effect */
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* 3. Input Styles optimization */
+.form-control.glass-input {
+    background: rgba(255, 255, 255, 0.08); /* Transparent input background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white !important;
 }
 
-.login-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+.form-control.glass-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: none; /* Removed default bootstrap shadow */
 }
 
-/* 3. Interactive Inputs */
-.form-control {
-  border-radius: 0 50px 50px 0 !important;
-  padding: 12px 15px;
-  transition: all 0.3s ease;
+.glass-input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 
-.input-group-text {
-  border-radius: 50px 0 0 50px !important;
-  padding-left: 20px;
-  transition: all 0.3s ease;
+.input-group-text.glass-input-icon {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.input-group:focus-within .input-group-text {
-  background-color: #0d6efd !important;
-  color: white !important;
-  border-color: #0d6efd;
+/* 4. Button & Hover Effects */
+.btn-glass-primary {
+    background: rgb(255, 255, 255);
+    color: #1e3a8a; /* Deep blue text on white button */
+    border: none;
+    transition: 0.3s ease;
 }
 
-.input-group:focus-within .bi {
-  color: white !important;
+.btn-glass-primary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.form-control:focus {
-  box-shadow: none;
-  border-color: #0d6efd;
+.btn-glass-primary:disabled {
+    opacity: 0.6;
+    background: #cccccc;
+    color: #666666;
 }
 
-/* 4. Button Animation */
-.transition-btn {
-  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-  border: none;
-  letter-spacing: 1px;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
+/* 5. Misc & Links */
+.text-warning-custom {
+    color: #ffc107; /* Bright yellow for validation messages */
 }
 
-.transition-btn:hover:not(:disabled) {
-  transform: scale(1.02);
-  filter: brightness(1.1);
-  box-shadow: 0 8px 20px rgba(37, 117, 252, 0.4) !important;
-}
-
-.transition-btn:active {
-  transform: scale(0.98);
-}
-
-.transition-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-/* 5. Hover Link Effect */
-.hover-link {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.hover-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: #0d6efd;
-  transition: width 0.3s ease;
-}
-
-.hover-link:hover::after {
-  width: 100%;
-}
-
-/* 6. Validation Error Style */
-.invalid-feedback small {
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-left: 15px;
-  animation: shake 0.2s ease-in-out;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+.hover-link:hover {
+    text-decoration: underline !important;
 }

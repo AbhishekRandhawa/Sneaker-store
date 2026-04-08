@@ -1,58 +1,59 @@
 <div class="login-wrapper d-flex align-items-center justify-content-center">
-  <div class="card login-card shadow-lg p-4 border-0 rounded-4">
+  
+  <div class="card login-card glass-morphism shadow-lg p-4 rounded-4 border-0">
     <div class="text-center mb-4">
-      <h2 class="fw-bold text-dark">Welcome Back</h2>
-      <p class="text-muted">Please enter your credentials to continue</p>
+      <h2 class="fw-bold text-white">Welcome Back</h2>
+      <p class="text-white-50">Please enter your credentials to continue</p>
     </div>
 
     <form [formGroup]="LoginForm" (ngSubmit)="onlogin()">
       
       <div class="mb-3">
-        <label class="form-label fw-semibold">Email Address</label>
+        <label class="form-label fw-semibold text-white">Email Address</label>
         <div class="input-group">
-          <span class="input-group-text bg-white border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+          <span class="input-group-text glass-input-icon border-end-0"><i class="bi bi-envelope text-white-50"></i></span>
           <input 
             type="email" 
-            class="form-control shadow-sm border-start-0 ps-0" 
+            class="form-control glass-input shadow-none border-start-0 ps-0" 
             formControlName="email" 
             placeholder="name@example.com"
             [class.is-invalid]="LoginForm.get('email')?.invalid && LoginForm.get('email')?.touched"
           >
         </div>
-        <div class="invalid-feedback d-block" *ngIf="LoginForm.get('email')?.touched && LoginForm.get('email')?.invalid">
+        <div class="invalid-feedback d-block text-warning-custom" *ngIf="LoginForm.get('email')?.touched && LoginForm.get('email')?.invalid">
           <small *ngIf="LoginForm.get('email')?.errors?.['required']">Email is required</small>
           <small *ngIf="LoginForm.get('email')?.errors?.['email']">Please enter a valid email</small>
         </div>
       </div>
 
       <div class="mb-4">
-        <label class="form-label fw-semibold">Password</label>
+        <label class="form-label fw-semibold text-white">Password</label>
         <div class="input-group">
-          <span class="input-group-text bg-white border-end-0"><i class="bi bi-lock text-muted"></i></span>
+          <span class="input-group-text glass-input-icon border-end-0"><i class="bi bi-lock text-white-50"></i></span>
           <input 
             type="password" 
-            class="form-control shadow-sm border-start-0 ps-0" 
+            class="form-control glass-input shadow-none border-start-0 ps-0" 
             formControlName="password" 
             placeholder="••••••••"
             [class.is-invalid]="LoginForm.get('password')?.invalid && LoginForm.get('password')?.touched"
           >
         </div>
-        <div class="invalid-feedback d-block" *ngIf="LoginForm.get('password')?.touched && LoginForm.get('password')?.invalid">
+        <div class="invalid-feedback d-block text-warning-custom" *ngIf="LoginForm.get('password')?.touched && LoginForm.get('password')?.invalid">
           <small>Password is required to login</small>
         </div>
       </div>
 
       <button 
         type="submit" 
-        class="btn btn-primary w-100 py-2 fw-bold mb-3 shadow rounded-pill transition-btn"
+        class="btn btn-glass-primary w-100 py-2 fw-bold mb-3 shadow rounded-pill transition-btn"
         [disabled]="LoginForm.invalid"
       >
         <span>SIGN IN</span>
       </button>
 
       <div class="text-center mt-3">
-        <span class="text-muted small">Don't have an account? </span>
-        <a routerLink="/auth/register" class="text-primary fw-bold text-decoration-none small hover-link">
+        <span class="text-white-50 small">Don't have an account? </span>
+        <a routerLink="/auth/register" class="text-white fw-bold text-decoration-none small hover-link">
           Create Account
         </a>
       </div>

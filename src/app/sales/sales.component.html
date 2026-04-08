@@ -1,0 +1,91 @@
+<div class="container-fluid p-4 bg-light min-vh-100">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-dark mb-1">Admin Sales Dashboard</h2>
+      <p class="text-muted">Real-time inventory and sales insights for Shoe Hub</p>
+    </div>
+    <button class="btn btn-primary shadow-sm rounded-3 px-4 py-2">
+      <i class="bi bi-download me-2"></i> Export Report
+    </button>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold mb-0">Revenue Overview</h5>
+          <div class="dropdown">
+            <select class="form-select form-select-sm border-0 bg-light fw-bold px-3 py-2 rounded-pill">
+              <option>Last 7 Days</option>
+              <option>Monthly</option>
+              <option>Yearly</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="chart-container" style="position: relative; height: 400px; width: 100%;">
+          <canvas #salesChart></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="row g-4">
+        
+        <div class="col-12">
+          <div class="card border-0 rounded-4 text-white p-4 shadow-sm h-100" 
+               style="background: linear-gradient(135deg, #198754 0%, #1e3a8a 100%); min-height: 220px;">
+            <div class="d-flex justify-content-between align-items-start">
+              <h6 class="fw-bold mb-0"><i class="bi bi-trophy-fill me-2"></i> Best Seller</h6>
+              <i class="bi bi-star-fill text-warning fs-4"></i>
+            </div>
+            
+            <div class="text-center mt-4" *ngIf="bestSeller; else noBestSeller">
+              <h2 class="display-5 fw-bold mb-0 text-truncate">{{ bestSeller.name }}</h2>
+              <p class="small opacity-75 mb-3">Highest Value Sneaker</p>
+              <div class="badge bg-white text-dark px-4 py-2 rounded-pill fw-bold fs-5 shadow-sm">
+                ₹{{ bestSeller.price | number }}
+              </div>
+            </div>
+            <ng-template #noBestSeller>
+              <div class="text-center mt-5">
+                <p class="opacity-75">Loading best seller data...</p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <div class="d-flex align-items-center mb-3">
+              <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3 text-success fs-4 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <i class="bi bi-currency-rupee"></i>
+              </div>
+              <div>
+                <p class="text-muted mb-0 fw-bold text-uppercase small" style="letter-spacing: 1px;">Current Inventory Value</p>
+                <h2 class="fw-bold text-dark mb-0">₹{{ totalRevenue | number }}</h2>
+              </div>
+            </div>
+            <div class="d-flex align-items-center text-success small fw-medium">
+              <i class="bi bi-arrow-up-short fs-4"></i>
+              <span>Live data from your storage</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card border-0 shadow-sm rounded-4 p-3 bg-white border-start border-5 border-warning">
+            <div class="d-flex align-items-start p-1">
+              <div class="me-3 fs-3">💡</div>
+              <div>
+                <p class="text-muted d-block fw-bold mb-1 small">Inventory Insight:</p>
+                <span class="small fw-bold text-dark">{{ lowStockMsg }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
