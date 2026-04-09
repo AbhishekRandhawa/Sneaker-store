@@ -29,7 +29,7 @@
 .form-control.glass-input {
     background: rgba(255, 255, 255, 0.08); /* Transparent input background */
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white !important;
+    color: rgb(4, 2, 2) !important;
 }
 
 .form-control.glass-input:focus {
@@ -49,7 +49,7 @@
 
 /* 4. Button & Hover Effects */
 .btn-glass-primary {
-    background: rgb(255, 255, 255);
+    background: rgb(239, 235, 237);
     color: #1e3a8a; /* Deep blue text on white button */
     border: none;
     transition: 0.3s ease;

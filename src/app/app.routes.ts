@@ -1,53 +1,83 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
-import { ProductdataComponent } from './productdata/productdata.component';
-import { AddtocartComponent } from './addtocart/addtocart.component';
 import { authGuard, roleGuard } from './auth.service';
-import { WishlistComponent } from './wishlist/wishlist.component';
-import { OrderComponent } from './order/order.component';
-import { AdminComponent } from './admin/admin.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { SettingComponent } from './setting/setting.component';
-import { SalesComponent } from './sales/sales.component';
-import { BulkuploadComponent } from './bulkupload/bulkupload.component';
+
+// 💡 Note: Upar se baaki saare components ke imports hata dein (Home, Login, etc.)
+// Sirf Guards aur Layouts ko rehne dein agar wo base par chahiye.
 
 export const routes: Routes = [
   {
     path: 'auth',
-    component: AuthLayoutComponent,
+    // Isse hum lazy load kar rahe hain
+    loadComponent: () => import('./auth-layout/auth-layout.component').then(m => m.AuthLayoutComponent),
     canActivate: [authGuard], 
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { 
+        path: 'login', 
+        loadComponent: () => import('./login/login.component').then(m => m.LoginComponent) 
+      },
+      { 
+        path: 'register', 
+        loadComponent: () => import('./register/register.component').then(m => m.RegisterComponent) 
+      }
     ]
   },
-  { path: 'home', component: HomeComponent, canActivate: [authGuard,roleGuard], data: { role: 'user' }},
-  { path: 'cart', component: AddtocartComponent, canActivate: [authGuard,roleGuard] ,data: { role: 'user' }},
-  { path: 'product/:id', component: ProductdataComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } },
-  
-  // { path: 'admin', component: AdminComponent, canActivate: [authGuard,roleGuard] , data: { role: 'admin' } }, 
-  { path: 'my-orders', component: OrderComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, 
-  { path: 'my-wishlist', component: WishlistComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } }, // 👈 Inpar bhi guard lagayein
-  { path: 'check-out', component: CheckoutComponent, canActivate: [authGuard,roleGuard],data: { role: 'user' } },
-  // {path: "user-settings", component:SettingComponent, canActivate: [authGuard,roleGuard],data: { role: 'admin' } }, // 👈 Inpar bhi guard lagayein
-{ 
-  path: 'admin', 
-  component: AdminComponent, 
-  canActivate: [authGuard, roleGuard], 
-  data: { role: 'admin' },
-  children: [
-    // 🚀 Isse 'admin/user-settings' active hoga
-    { path: 'user-settings', component: SettingComponent },
-    {path: 'chart', component:SalesComponent},
-    {path:'bulkupload', component:BulkuploadComponent}
-  ]
-},
+  { 
+    path: 'home', 
+    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'user' }
+  },
+  { 
+    path: 'cart', 
+    loadComponent: () => import('./addtocart/addtocart.component').then(m => m.AddtocartComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'user' }
+  },
+  { 
+    path: 'product/:id', 
+    loadComponent: () => import('./productdata/productdata.component').then(m => m.ProductdataComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'user' } 
+  },
+  { 
+    path: 'my-orders', 
+    loadComponent: () => import('./order/order.component').then(m => m.OrderComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'user' } 
+  },
+  { 
+    path: 'my-wishlist', 
+    loadComponent: () => import('./wishlist/wishlist.component').then(m => m.WishlistComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'user' } 
+  },
+  { 
+    path: 'check-out', 
+    loadComponent: () => import('./checkout/checkout.component').then(m => m.CheckoutComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'user' } 
+  },
+  { 
+    path: 'admin', 
+    loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent), 
+    canActivate: [authGuard, roleGuard], 
+    data: { role: 'admin' },
+    children: [
+      { 
+        path: 'user-settings', 
+        loadComponent: () => import('./setting/setting.component').then(m => m.SettingComponent) 
+      },
+      { 
+        path: 'chart', 
+        loadComponent: () => import('./sales/sales.component').then(m => m.SalesComponent) 
+      },
+      { 
+        path: 'bulkupload', 
+        loadComponent: () => import('./bulkupload/bulkupload.component').then(m => m.BulkuploadComponent) 
+      }
+    ]
+  },
 
-  // Default redirect logic
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to home, guard will handle login if needed
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' } 
 ];
