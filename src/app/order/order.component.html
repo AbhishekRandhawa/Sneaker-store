@@ -35,9 +35,16 @@
               <span class="small text-uppercase text-muted d-block">Status</span>
               <span class="badge bg-warning">{{order.status}}</span>
             </div>
-            <div class="text-end">
-              <span class="small text-uppercase text-muted d-block">Grand Total</span>
-              <h4 class="text-success mb-0">₹{{order.total}}</h4>
+
+            <div class="d-flex align-items-center gap-3">
+              <button (click)="Reorder(order)" class="btn btn-dark btn-sm rounded-pill px-3">
+                <i class="bi bi-arrow-repeat me-1"></i> Reorder
+              </button>
+              
+              <div class="text-end">
+                <span class="small text-uppercase text-muted d-block">Grand Total</span>
+                <h4 class="text-success mb-0">₹{{order.total}}</h4>
+              </div>
             </div>
           </div>
         </div>
