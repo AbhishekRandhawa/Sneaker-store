@@ -93,19 +93,52 @@ removeItem(id: number) {
 
   // Checkout sirf tab maange jab user Buy kare
   onCheckout() {
-    const user = localStorage.getItem('currentUser');
-    if (!user) {
-      alert("Please login to complete your order!");
-      this.router.navigate(['/check-out']);
-    } else {
-      // Order place karne ki logic
-      this.cartService.placeOrder({
-        orderId: 'ORD' + Date.now(),
-        items: this.cartItems,
-        total: this.subtotal
-      });
-      alert("Order Placed Successfully!");
+  const user = localStorage.getItem('currentUser');
+
+  if (!user) {
+    // 1. Error Alert: Agar user logged in nahi hai
+    Swal.fire({
+      icon: 'warning',
+      title: 'Login Required!',
+      text: 'Order complete karne ke liye aapko login karna hoga.',
+      confirmButtonColor: '#b8860b', // Hamara Classic Gold shade
+      confirmButtonText: 'Go to Login',
+      showCancelButton: true,
+      cancelButtonText: 'Stay here',
+      backdrop: `rgba(0,0,0,0.4)`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/check-out']); // Ya login page ka path
+      }
+    });
+    
+  } else {
+    // 2. Success Alert: Order place hone par
+    this.cartService.placeOrder({
+      orderId: 'ORD' + Date.now(),
+      items: this.cartItems,
+      total: this.subtotal
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Order Placed!',
+      html: `
+        <div class="p-2">
+          <p class="mb-2">Aapka order successfully place ho gaya hai.</p>
+          <strong style="color: #b8860b;">Total Amount: ₹${this.subtotal}</strong>
+        </div>
+      `,
+      confirmButtonColor: '#1e293b', // Deep Navy/Black
+      confirmButtonText: 'Return to Home',
+      timer: 4000, // 4 seconds baad automatically home par le jayega
+      timerProgressBar: true,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown' // Animations ke liye
+      }
+    }).then(() => {
       this.router.navigate(['/home']);
-    }
+    });
   }
+}
 }

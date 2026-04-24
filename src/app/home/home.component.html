@@ -1,24 +1,26 @@
 <div class="container mt-4">
-  <div class="row mb-4 p-3 bg-white shadow-sm rounded align-items-end mx-1">
-    
+  <div class="row mb-4 p-3 filter-panel shadow-sm rounded align-items-end mx-1">
     <div class="col-md-4">
-      <label class="form-label fw-bold small text-uppercase">Search Product</label>
-      <input type="text" class="form-control" placeholder="Search by name..." 
-             [(ngModel)]="searchText" (input)="applyfilter()">
+      <label class="form-label fw-bold small text-uppercase text-muted">Search Product</label>
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" class="form-control" placeholder="Search sneakers..." 
+               [(ngModel)]="searchText" (input)="applyfilter()">
+      </div>
     </div>
 
     <div class="col-md-4">
       <div class="d-flex justify-content-between">
-        <label class="form-label fw-bold small text-uppercase">Max Price</label>
-        <span class="text-primary fw-bold">₹{{ maxPrice }}</span>
+        <label class="form-label fw-bold small text-uppercase text-muted">Max Price</label>
+        <span class="text-gold fw-bold">₹{{ maxPrice }}</span>
       </div>
-      <input type="range" class="form-range" min="0" max="100000" step="1000" 
+      <input type="range" class="form-range custom-range" min="0" max="200000" step="1000" 
              [(ngModel)]="maxPrice" (input)="applyfilter()">
     </div>
 
     <div class="col-md-4">
-      <label class="form-label fw-bold small text-uppercase">Sort By</label>
-      <select class="form-select" [(ngModel)]="sortOrder" (change)="applyfilter()">
+      <label class="form-label fw-bold small text-uppercase text-muted">Sort By</label>
+      <select class="form-select custom-select" [(ngModel)]="sortOrder" (change)="applyfilter()">
         <option value="">Default</option>
         <option value="low">Price: Low to High</option>
         <option value="high">Price: High to Low</option>
@@ -27,55 +29,74 @@
   </div>
 
   <div class="row">
-    <div class="col-md-3 mb-4" *ngFor="let p of filteredProducts">
-      
-      <div class="card shadow-sm h-100 border-0 position-relative wishlist-card product-card" 
-           (click)="viewProduct(p.id)" 
-           style="cursor: pointer; transition: transform 0.2s;">
-        
-        <button (click)="addToWishlist(p); $event.stopPropagation()" 
-                class="btn position-absolute top-0 end-0 m-2 shadow-sm bg-white rounded-circle"
-                style="z-index: 10; border: none; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;">
-          <i class="bi bi-heart-fill text-danger"></i>
-        </button>
-        
-        <div class="img-container" style="overflow: hidden;">
-          <img [src]="p.img" class="card-img-top p-3 zoom-img" 
-               style="height: 200px; object-fit: contain;" [alt]="p.name">
-        </div>
-
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title fw-bold text-truncate" title="{{ p.name }}">{{ p.name }}</h5>
-          <p class="small text-muted text-truncate mb-3">{{ p.desc }}</p>
+    @for (p of filteredProducts; track p.id) {
+      <div class="col-md-3 mb-4">
+        <div class="card product-card shadow-sm h-100 border-0" (click)="viewProduct(p.id)">
           
-          <div class="mt-auto">
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="text-success fw-bold fs-5">₹{{ p.price }}</span>
-              
-              <div (click)="$event.stopPropagation()">
-                <button *ngIf="isInCart(p.id)" 
-                        (click)="goToCart()" 
-                        class="btn btn-warning btn-sm px-3 shadow-sm fw-bold rounded-pill">
-                  <i class="bi bi-arrow-right-circle me-1"></i> Go to Cart
-                </button>
+          <div class="sale-badge position-absolute top-0 start-0 m-2 shadow-sm">
+            50% OFF
+          </div>
 
-                <button *ngIf="!isInCart(p.id)" 
-                        (click)="add(p)" 
-                        class="btn btn-primary btn-sm px-3 shadow-sm fw-bold rounded-pill">
-                  <i class="bi bi-cart-plus me-1"></i> Add to Cart
-                </button>
+          <button (click)="addToWishlist(p); $event.stopPropagation()" 
+                  class="btn wishlist-btn position-absolute top-0 end-0 m-2 shadow-sm rounded-circle">
+            <i class="bi bi-heart-fill"></i>
+          </button>
+          
+          <div class="img-container">
+            <img [src]="p.img" class="card-img-top p-3 zoom-img" [alt]="p.name">
+          </div>
+
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold text-truncate" [title]="p.name">{{ p.name }}</h5>
+            
+            <div class="product-rating mb-2">
+              <div class="stars d-flex align-items-center">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <i class="bi" 
+                     [ngClass]="{
+                       'bi-star-fill': p.rating >= star,
+                       'bi-star-half': p.rating < star && p.rating > star - 1,
+                       'bi-star': p.rating <= star - 1
+                     }">
+                  </i>
+                }
+                <span class="ms-2 rating-text text-dark">{{ p.rating }}</span>
+                <span class="ms-1 review-count text-muted">({{ p.reviews }})</span>
               </div>
+            </div>
 
+            <p class="small text-muted text-truncate mb-3">{{ p.desc }}</p>
+            
+            <div class="mt-auto">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="price-container d-flex flex-column">
+                  <span class="price-tag fw-bold fs-5">₹{{ p.price / 2 }}</span>
+                  <span class="text-muted text-decoration-line-through small" style="font-size: 0.8rem;">
+                    ₹{{ p.price }}
+                  </span>
+                </div>
+                
+                <div (click)="$event.stopPropagation()">
+                  @if (isInCart(p.id)) {
+                    <button (click)="goToCart()" class="btn btn-go-cart btn-sm px-3 shadow-sm fw-bold rounded-pill">
+                      <i class="bi bi-arrow-right-circle me-1"></i> Cart
+                    </button>
+                  } @else {
+                    <button (click)="add(p)" class="btn btn-add-cart btn-sm px-3 shadow-sm fw-bold rounded-pill">
+                      <i class="bi bi-cart-plus me-1"></i> Add
+                    </button>
+                  }
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="col-12 text-center py-5" *ngIf="filteredProducts.length === 0">
+    } @empty {
+      <div class="col-12 text-center py-5">
         <i class="bi bi-search text-muted display-1"></i>
-        <h4 class="text-muted mt-3">Bhai, koi sneaker nahi mila! 👟</h4>
-        <p class="text-secondary">Thoda filters change karke dekho.</p>
-    </div>
+        <h4 class="text-muted mt-3">Koi sneaker nahi mila! 👟</h4>
+      </div>
+    }
   </div>
 </div>

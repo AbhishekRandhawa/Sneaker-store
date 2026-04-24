@@ -1,77 +1,89 @@
-/* 1. Main Wrapper Background (Jiske upar glass rakhenge) */
+/* 1. Main Wrapper Background (Deep Navy Blue Theme) */
 .login-wrapper {
     height: 100vh;
     width: 100%;
-    /* Ek vibrant Shoes-Hub theme ka gradient (Deep Blue to Purple) */
-    background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
-    position: fixed; /* Ensures background fills screen */
+    /* 1. Background Image (Yahan apni image ka path daalein) */
+    background-image: linear-gradient(rgba(15, 28, 42, 0.7), rgba(26, 44, 61, 0.7)), 
+                      url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1920&q=80');
+    
+    /* 2. Image ko center aur full-screen karne ke liye */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* 2. Glassmorphism Card Core Logic */
+/* 2. Glassmorphism Card Core Logic (Slightly Darker to Contrast Deep Background) */
 .glass-morphism {
-    /* Halka white aur transparent background */
-    background: rgba(255, 255, 255, 0.1) !important; 
+    /* Slightly darker and slightly higher opacity white */
+    background: rgba(255, 255, 255, 0.15) !important; 
     
-    /* The main blur effect (mandatory) */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    /* Good amount of blur for clear glass effect on dark background */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     
-    /* Patli border edges ke liye */
+    /* Subtle but slightly more visible white border for crisp edges */
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     
-    /* Floating feel dene ke liye deeper shadow */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+    /* Deeper, more pronounced shadow for strong floating feel */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 20px; /* Modern and friendly rounded corners */
 }
 
-/* 3. Input Styles optimization */
+/* 3. Input Styles Optimization (Contrasting) */
 .form-control.glass-input {
-    background: rgba(255, 255, 255, 0.08); /* Transparent input background */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgb(4, 2, 2) !important;
+    background: rgba(0, 0, 0, 0.1); /* Slightly darker input background */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f3f4f6 !important; /* Brighter grey/white text for readability */
+    border-radius: 10px;
 }
 
 .form-control.glass-input:focus {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: none; /* Removed default bootstrap shadow */
+    background: rgba(0, 0, 0, 0.15);
+    border-color: #fca311; /* Amazon-like orange for active focus state */
+    box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.1);
 }
 
 .glass-input::placeholder {
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(255, 255, 255, 0.6) !important; /* Transparent white placeholder */
 }
 
-.input-group-text.glass-input-icon {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* 4. Button & Hover Effects */
+/* 4. Button & Hover Effects (Amazon Warm Orange Theme) */
 .btn-glass-primary {
-    background: rgb(239, 235, 237);
-    color: #1e3a8a; /* Deep blue text on white button */
+    /* Classic Amazon Warm Orange Button */
+    background: #fca311;
+    color: #111827 !important; /* Dark grey text on orange button */
     border: none;
-    transition: 0.3s ease;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 700; /* Bold font for call to action */
+    transition: all 0.3s ease;
 }
 
 .btn-glass-primary:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.9);
+    background: #f39c12; /* Slightly deeper orange on hover */
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px rgba(252, 163, 17, 0.4);
 }
 
-.btn-glass-primary:disabled {
-    opacity: 0.6;
-    background: #cccccc;
-    color: #666666;
+/* 5. Typography & Links (Clean and Legible) */
+h2, label {
+    color: #f3f4f6; /* Off-white for general text readability */
 }
 
-/* 5. Misc & Links */
-.text-warning-custom {
-    color: #ffc107; /* Bright yellow for validation messages */
+.hover-link {
+    color: #fca311; /* Link color matching the main theme color */
+    text-decoration: none;
+    transition: 0.2s;
 }
 
 .hover-link:hover {
+    color: #f39c12; /* Hover state for links */
     text-decoration: underline !important;
 }

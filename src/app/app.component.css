@@ -1,47 +1,72 @@
-/* Floating Button Container */
-.theme-controller {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  z-index: 9999;
-}
-
-/* Interactive Toggle Button */
-.btn-toggle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: none;
-  /* Premium Gradient Look */
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: white;
-  font-size: 1.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Hover & Active Effects */
-.btn-toggle:hover {
-  transform: scale(1.1) rotate(10deg);
-  box-shadow: 0 12px 25px rgba(37, 117, 252, 0.4);
-}
-
-.btn-toggle:active {
-  transform: scale(0.9);
-}
-
-/* Dark Mode Button Animation */
-[data-theme='dark'] .btn-toggle {
-  background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
-  box-shadow: 0 8px 20px rgba(245, 175, 25, 0.3);
-}
-
-/* Optional: Smooth transition for the main router area */
+/* 1. Main Wrapper (Fixing the overflow at root) */
 .main-container {
-  min-height: 100vh;
-  transition: background-color 0.3s ease;
+    height: 100vh; /* Fixed height for the whole screen */
+    width: 100vw;
+    overflow: hidden; /* Bahar ka scroll band */
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.5s ease-in-out;
+    
+    /* Default Background */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+                      url('https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1920&auto=format&fit=crop');
+}
+
+/* 2. Scrollable Content Area */
+.main-content {
+    flex-grow: 1; /* Navbar ke baad bachi hui jagah lega */
+    height: calc(100vh - 70px); /* 70px Navbar height adjust ki hai */
+    overflow-y: auto; /* Sirf vertical scroll allowed */
+    overflow-x: hidden; /* Horizontal scroll hamesha hidden */
+    width: 100%;
+    
+    /* Image background from your code */
+    background: linear-gradient(rgba(3, 7, 18, 0.6), rgba(3, 7, 18, 0.7)), 
+                url('https://banjaaran.in/cdn/shop/files/Bori_01.jpg?v=1757593198&width=823');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: all 0.5s ease-in-out;
+}
+
+/* 3. Global Hidden Scrollbar logic (Optional for clean look) */
+.main-content::-webkit-scrollbar {
+    width: 6px;
+}
+.main-content::-webkit-scrollbar-thumb {
+    background: rgba(184, 134, 11, 0.5); /* Hamara Classic Gold shade */
+    border-radius: 10px;
+}
+
+/* Dark Mode logic remains same but with locked overflow */
+[data-theme='dark'] .main-container {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                      url('https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=1920&auto=format&fit=crop');
+}
+
+/* 4. Theme Toggle Button Fix */
+.theme-controller {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+}
+
+.btn-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

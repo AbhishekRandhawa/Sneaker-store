@@ -1,121 +1,102 @@
-/* Navbar Background - Deep Blue Gradient */
+/* --- Navbar Background - Cream/White Look --- */
 .custom-navbar {
-  background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-  padding: 0.8rem 0;
-
-  /* 🚀 FIX: Isko top par fix karne ke liye aur z-index handle karne ke liye */
+  /* Halka cream/off-white background */
+  background: #ffffff; 
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf2 100%); 
+  
+  /* Border ko thoda dark kiya taaki white page se alag dikhe */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.6rem 0;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1050; /* Bootstrap ke modals se niche lekin content se upar */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow */
 }
 
-/* --- THE STYLISH LOGO --- */
-.stylish-logo {
-  font-family: 'Montserrat', sans-serif; /* Thoda bold aur clean font */
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  text-decoration: none !important;
-  transition: transform 0.3s ease;
-}
-
+/* --- THE STYLISH LOGO (Updated for Light BG) --- */
 .the-text {
-  font-size: 1rem;
-  font-weight: 300;
-  color: #94a3b8; /* Light gray-blue */
-  text-transform: lowercase;
-  font-style: italic;
+  color: #64748b; /* Darker gray */
 }
 
 .shoe-text {
-  font-size: 2rem;
-  font-weight: 900;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: -2px;
-  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  color: #1e293b; /* Deep Navy/Black */
+  text-shadow: none; /* Light background par shadow ki zarurat nahi */
 }
 
-.hub-text {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #fbbf24; /* Golden Yellow */
-  background: #fbbf24;
-  background: linear-gradient(to bottom, #fbbf24 0%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.stylish-logo:hover {
-  transform: translateY(-2px);
-}
-
-/* --- NAV LINKS STYLE --- */
+/* --- NAV LINKS STYLE (Dark Text) --- */
 .custom-link {
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-weight: 500;
-  position: relative;
-  transition: 0.3s;
+  color: #334155 !important; /* Slate black for visibility */
+  font-weight: 600;
 }
 
 .custom-link:hover, .custom-link.active {
-  color: #fff !important;
+  color: #0d6efd !important; /* Blue accent on hover */
 }
 
-.custom-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 5px;
-  left: 50%;
-  background: #fbbf24;
-  transition: 0.3s;
-  transform: translateX(-50%);
+/* --- USER PROFILE & CART --- */
+.user-profile-section .text-white {
+  color: #1e293b !important; /* 'Hi, Name' ko dark kiya */
 }
 
-.custom-link:hover::after, .custom-link.active::after {
-  width: 70%;
-}
-
-/* --- ADMIN DASHBOARD HIGHLIGHT --- */
-.admin-link {
-  border: 1px solid #fbbf24;
-  border-radius: 8px;
-  color: #fbbf24 !important;
-  margin-right: 10px;
-}
-
-/* --- CART & LOGOUT --- */
-.cart-icon-wrapper:hover {
-  color: #fbbf24 !important;
+.cart-icon-wrapper {
+  color: #1e293b !important; /* Cart icon black/dark navy */
 }
 
 .badge-custom {
-  font-size: 0.7rem;
-  padding: 4px 7px;
-  border: 2px solid #1e3a8a;
+  border: 2px solid #ffffff; /* Badge ke charo taraf white ring */
 }
 
+/* --- LOGOUT BUTTON (Softened) --- */
 .logout-btn {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
+  background: transparent;
+  border: 1.5px solid #ef4444;
   color: #ef4444;
-  font-weight: 600;
-  transition: 0.3s;
 }
 
 .logout-btn:hover {
   background: #ef4444;
   color: white;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
 }
-body {
-  /* Navbar ki height lagbhag 75px-80px hai, isliye 90px gap best rahega */
-  padding-top: 90px !important; 
-  background-color: #f8fafc; /* Aapka dashboard ka light gray background */
+/* --- THE CLASSIC LOGO --- */
+.stylish-logo {
+  font-family: 'Playfair Display', serif; /* Agar ho sake toh ye serif font use karein classic feel ke liye */
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.the-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #64748b; /* Subtle Slate Gray */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.shoe-text {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1a1a1a; /* Pure Deep Black */
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  /* Premium look ke liye shadow hata di hai */
+}
+
+.hub-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  /* Elegant Matte Gold */
+  color: #b8860b; 
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.stylish-logo:hover .shoe-text {
+  color: #000;
+  transition: 0.3s;
 }

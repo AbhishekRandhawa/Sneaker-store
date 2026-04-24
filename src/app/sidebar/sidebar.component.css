@@ -1,53 +1,91 @@
 .sidebar {
   width: 260px;
-  height: calc(100vh - 70px); /* 70px Navbar height hai */
-  background-color: #1e1b4b;
+  height: calc(100vh - 70px); 
+  /* Deep Charcoal background (Modern & Classic) */
+  background-color: #111827; 
   position: fixed;
   left: 0;
   top: 70px;
   z-index: 1000;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow-y: auto; /* 👈 Agar screen choti hui toh scroll aayega */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
   overflow-x: hidden;
+  /* Halka border jo Cream Navbar ke saath contrast banaye */
+  border-right: 1px solid rgba(184, 134, 11, 0.15); 
+  display: flex;
+  flex-direction: column; /* Footer ko niche rakhne ke liye zaroori hai */
 }
 
-/* Scrollbar ko sundar banane ke liye (Optional) */
+/* Scrollbar Customization */
 .sidebar::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 .sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(184, 134, 11, 0.3); /* Goldish scrollbar */
 }
 
+/* Collapsed State */
 .sidebar.collapsed {
   width: 80px !important;
-}
-.sidebar.collapsed span {
-  display: none;
 }
 
 /* Nav Links Styling */
 .nav-link {
+  color: #94a3b8 !important; /* Muted gray text */
+  margin: 8px 15px;
+  padding: 12px 15px;
   border-radius: 12px;
-  transition: 0.2s;
-  white-space: nowrap;
+  transition: 0.3s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff !important;
+  transform: translateX(4px);
 }
 
+/* Active State - Classic Gold Gradient */
 .nav-link.active {
-  background: #fbbf24 !important;
-  color: #1e1b4b !important;
+  background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%) !important;
+  color: #000000 !important; /* Gold par black text hamesha premium dikhta hai */
+  box-shadow: 0 4px 15px rgba(184, 134, 11, 0.25);
+  font-weight: 700;
 }
 
-.sidebar.collapsed .nav-link {
-  justify-content: center;
-  padding: 10px 0;
+/* Icons Adjustment */
+.nav-link i {
+  font-size: 1.2rem;
+  transition: 0.3s;
 }
 
-/* Sidebar Footer hamesha niche rahe */
+.nav-link.active i {
+  color: #000000;
+}
+
+/* Sidebar Footer (Logout) */
 .sidebar-footer {
-  margin-top: auto; /* 👈 Ye Logout ko niche dhakelta hai */
+  margin-top: auto; 
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logout-sidebar-btn {
+  color: #ef4444 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.logout-sidebar-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.02);
 }

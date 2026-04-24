@@ -1,44 +1,51 @@
-.btn-dark, .btn-warning {
-  letter-spacing: 0.5px;
-  padding: 10px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+/* Filter Panel */
+.filter-panel {
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf2 100%) !important;
+  border: 1px solid rgba(184, 134, 11, 0.1);
 }
+.text-gold { color: #b8860b; }
 
-.btn-dark:hover {
-  background-color: #444;
-}
-
-.product-card {
-  transition: transform 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-}
-
-.wishlist-btn {
+/* Sale Badge - Premium Red */
+.sale-badge {
+  background: linear-gradient(45deg, #ef4444, #b91c1c);
+  color: white;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  border-radius: 4px;
   z-index: 5;
+  animation: pulse-red 2s infinite;
 }
 
-/* Container jo image ko kaat ke rakhega zoom ke time */
-.img-container {
-  border-radius: 8px 8px 0 0;
-  background-color: #f8f9fa; /* Background color for empty space */
+@keyframes pulse-red {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-/* Default state image ki */
-.zoom-img {
-  transition: transform 0.5s ease; /* Smooth slow zoom transition */
+/* Product Card */
+.product-card {
+  transition: all 0.4s ease;
+  background-color: #fff;
 }
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1) !important; }
 
-/* Jab pure card (product-card) par cursor jaye, tab image zoom ho */
-.product-card:hover .zoom-img {
-  transform: scale(1.18); /* 18% badi dikhegi image */
-}
+/* Ratings */
+.product-rating .bi { color: #b8860b; font-size: 0.85rem; }
+.rating-text { font-size: 0.85rem; font-weight: 700; }
 
-/* Card thoda lift bhi karega */
-.product-card:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important;
-}
+/* Prices */
+.price-tag { color: #ef4444; } /* Sale price highlighted in red */
+
+/* Buttons */
+.btn-add-cart { background: #1e293b; color: #fff; border: none; }
+.btn-add-cart:hover { background: #b8860b; }
+.btn-go-cart { background: #b8860b; color: #000; border: none; }
+
+/* Image Container */
+.img-container { overflow: hidden; height: 180px; background: #f8fafc; border-radius: 8px; }
+.zoom-img { transition: 0.5s ease; object-fit: contain; width: 100%; height: 100%; }
+.product-card:hover .zoom-img { transform: scale(1.1); }
+
+.wishlist-btn { background: white; color: #cbd5e1; border: none; }
+.wishlist-btn:hover { color: #ef4444; transform: scale(1.1); }

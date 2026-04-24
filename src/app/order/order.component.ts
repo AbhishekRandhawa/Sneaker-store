@@ -25,15 +25,13 @@ ngOnInit(){
   this.myorder = this.orderservice.getOrderHistory().reverse();
 }
 
-// OrderComponent ke andar Reorder function ko aise sahi karein:
+
 
 Reorder(order: any) {
-  // Check karein ki order aur items exist karte hain
+ 
   if (order && order.items) {
     order.items.forEach((item: any) => {
-      // 🚀 FIX: Yahan function ka naam (e.g., addToCart) likhna zaroori hai
       this.cartservice.addToCart(item); 
-      // Agar aapne ProductService inject kiya hai toh: this.productservice.addToCart(item);
     });
 
     Swal.fire({

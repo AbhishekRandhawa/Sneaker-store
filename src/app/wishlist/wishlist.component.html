@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h2 class="mb-4 fw-bold text-uppercase">My Wishlist 💖</h2>
+<h2 class="mb-4 fw-bold text-uppercase text-white">My Wishlist 💖</h2>
   
   <div class="row g-4" *ngIf="items.length > 0; else emptyWish">
     <div class="col-md-3" *ngFor="let item of items">
@@ -24,7 +24,7 @@
 
   <ng-template #emptyWish>
     <div class="text-center py-5">
-      <h4>Your wishlist is empty!</h4>
+      <h4 class="text-white">Your wishlist is empty!</h4>
       <a routerLink="/home" class="btn btn-primary mt-3">Start Browsing</a>
     </div>
   </ng-template>
