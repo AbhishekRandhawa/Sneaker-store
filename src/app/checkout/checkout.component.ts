@@ -78,10 +78,16 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.calculateTotal(); // Common method for calculation
   }
 
-  // Calculation logic jisme discount minus hoga
-  calculateTotal() {
-    this.grandtotal = (this.subtotal - this.discountAmount) + this.gst;
-  }
+
+calculateTotal() {
+ 
+  this.subtotal = this.cart.reduce((acc, item) => {
+    return acc + (Number(item.price) * Number(item.quantity || 1));
+  }, 0);
+
+  
+  this.grandtotal = (this.subtotal - this.discountAmount) + this.gst;
+}
 
   // --- Promo Code Logic ---
   applyPromoCode(code: string) {

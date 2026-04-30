@@ -16,6 +16,7 @@ export class AddtocartComponent implements OnInit {
   subtotal: number = 0;
 
   // Modern injection method
+
   private cartService = inject(CartService);
   private router = inject(Router);
 
@@ -129,7 +130,7 @@ removeItem(id: number) {
           <strong style="color: #b8860b;">Total Amount: ₹${this.subtotal}</strong>
         </div>
       `,
-      confirmButtonColor: '#1e293b', // Deep Navy/Black
+      confirmButtonColor: '#4c6081', // Deep Navy/Black
       confirmButtonText: 'Return to Home',
       timer: 4000, // 4 seconds baad automatically home par le jayega
       timerProgressBar: true,
