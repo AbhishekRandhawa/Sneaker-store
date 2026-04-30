@@ -47,6 +47,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   private orderservice = inject(OrderService);
   private cartservice = inject(CartService);
   private emailService = inject(EmailService);
+  
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
@@ -54,7 +55,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     if (state) {
       this.buyNowProduct = { ...state.product, size: state.selectedSize };
-      console.log("Buy Now Mode Active: ", this.buyNowProduct);
+      console.log("Buy Now Mode Active: ", this.buyNowProduct);   
     }
   }
 
@@ -178,52 +179,65 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
   }
 
-  processFinalOrder(paymentId: string) {
+processFinalOrder(paymentId: string) {
+    this.inprocessing = true;
     const orderId = 'ORD' + Math.floor(Math.random() * 1000000);
-    const shippingDetails = this.checkoutForm.value;
+
+    // 1. LocalStorage se logged-in user ka sahi email nikalein
+    const userSession = JSON.parse(localStorage.getItem('users') || '{}');
+    const loggedInEmail = userSession.email; 
+
+    // 2. Form details lein aur email ko logged-in email se overwrite karein
+    const shippingDetails = {
+        ...this.checkoutForm.value,
+        email: loggedInEmail // Yeh sabse important line hai filter match karne ke liye
+    };
 
     const finalOrder = {
-      orderId: orderId,
-      date: new Date(),
-      items: [...this.cart],
-      subtotal: this.subtotal,
-      discount: this.discountAmount, // Discount details save karna acha rehta hai
-      promoCode: this.appliedPromoCode,
-      total: this.grandtotal,
-      paymentId: paymentId,
-      status: 'Pending',
-      shippingDetails: shippingDetails
+        orderId: orderId,
+        date: new Date(),
+        items: [...this.cart],
+        subtotal: this.subtotal,
+        discount: this.discountAmount,
+        promoCode: this.appliedPromoCode,
+        total: this.grandtotal,
+        paymentId: paymentId,
+        status: 'Pending',
+        shippingDetails: shippingDetails
     };
 
+    // 3. Email params tyyar karein
     const emailParams = {
-      to_name: `${shippingDetails.firstName} ${shippingDetails.lastName}`,
-      order_id: orderId,
-      total_amount: '₹' + this.grandtotal.toFixed(2),
-      customer_email: shippingDetails.email,
-      message: `Aapka order successfully place ho gaya hai! Total Items: ${this.cart.length}. Discount: ₹${this.discountAmount}`
+        to_name: `${shippingDetails.firstName} ${shippingDetails.lastName}`,
+        order_id: orderId,
+        total_amount: '₹' + this.grandtotal.toFixed(2),
+        customer_email: shippingDetails.email,
+        message: `Aapka order successfully place ho gaya hai! Total Items: ${this.cart.length}.`
     };
 
+    // 4. Order Save karein aur Email bhejein
     this.orderservice.PlaceOrder(finalOrder);
 
     this.emailService.sendEmailData(emailParams)
-      .then(() => console.log('Email Sent Successfully!'))
-      .catch((err) => console.error('Email sending failed!', err));
-    
+        .then(() => console.log('Confirmation Email Sent!'))
+        .catch((err) => console.error('Email sending failed!', err));
+
     this.inprocessing = false;
 
+    // 5. Success Message aur Redirect
     Swal.fire({
-      icon: 'success',
-      title: 'Order Placed!',
-      text: 'Bhai, shoes jald hi aapke paas honge! Confirmation email sent.',
-      timer: 3000,
-      showConfirmButton: false
+        icon: 'success',
+        title: 'Order Placed!',
+        text: 'Bhai, shoes jald hi aapke paas honge!',
+        timer: 2500,
+        showConfirmButton: false
     }).then(() => {
-      if (!this.buyNowProduct) {
-        this.cartservice.clearCart(); 
-      }
-      this.router.navigate(['/my-orders']);
+        if (!this.buyNowProduct) {
+            this.cartservice.clearCart(); 
+        }
+        this.router.navigate(['/my-orders']);
     });
-  }
+}
 
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {

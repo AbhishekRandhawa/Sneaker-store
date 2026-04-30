@@ -6,18 +6,17 @@
 
   @if (myorder.length > 0) {
     <div class="table-responsive rounded-3 shadow-sm custom-table-container">
-      <table class="table table-hover align-middle mb-0 text-white">
+      <table class="table table-hover align-middle mb-0 text-white border-secondary">
         <thead class="table-dark">
           <tr>
             <th class="ps-4">Order Details</th>
             <th>Items</th>
             <th class="text-center">Status</th>
-            <th class="text-end">Grand Total</th>
+            <th class="text-end pe-4">Grand Total</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
-        <tbody class="bg-dark-card">
-          @for (order of myorder; track order.orderId) {
+        <tbody style="background: #1a1a1a;"> @for (order of myorder; track order.orderId) {
             <tr>
               <td class="ps-4">
                 <div class="fw-bold text-info">#{{order.orderId}}</div>
@@ -27,23 +26,29 @@
               <td>
                 @for (item of order.items; track item.id) {
                   <div class="d-flex align-items-center mb-2">
-                    <img [src]="item.img" class="rounded me-2" width="40" height="40" alt="shoe">
+                    <img [src]="item.img" class="rounded me-2 border border-secondary" width="40" height="40" alt="shoe">
                     <div>
-                      <div class="small fw-bold">{{item.name}}</div>
-                      <small class="text-muted">Qty: {{item.quantity}} | ₹{{item.price}}</small>
+                      <div class="small fw-bold text-light">{{item.name}}</div>
+                      <small class="text-muted">Qty: {{item.quantity || 1}} | ₹{{item.price}}</small>
                     </div>
                   </div>
                 }
               </td>
 
               <td class="text-center">
-                <span class="badge rounded-pill" 
-                      [ngClass]="{'bg-warning text-dark': order.status === 'Pending', 'bg-success': order.status === 'Delivered'}">
+                <span class="badge rounded-pill px-3 py-2" 
+                      [ngClass]="{
+                        'bg-warning text-dark': order.status === 'Pending', 
+                        'bg-info': order.status === 'Approved',
+                        'bg-primary': order.status === 'Shipped',
+                        'bg-success': order.status === 'Delivered',
+                        'bg-danger': order.status === 'Rejected'
+                      }">
                   {{order.status}}
                 </span>
               </td>
 
-              <td class="text-end fw-bold text-success fs-5">
+              <td class="text-end fw-bold text-success fs-5 pe-4">
                 ₹{{order.total}}
               </td>
 
@@ -58,5 +63,11 @@
       </table>
     </div>
   } @else {
-    }
+    <div class="text-center py-5 bg-dark rounded-3 shadow border border-secondary">
+        <i class="bi bi-cart-x display-1 text-muted"></i>
+        <h3 class="text-white mt-3">Koi orders nahi mile!</h3>
+        <p class="text-muted">Lagta hai aapne abhi tak kuch khareeda nahi hai.</p>
+        <button routerLink="/home" class="btn btn-primary rounded-pill px-4">Start Shopping</button>
+    </div>
+  }
 </div>

@@ -40,7 +40,7 @@
 .form-control.glass-input {
     background: rgba(0, 0, 0, 0.1); /* Slightly darker input background */
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #f3f4f6 !important; /* Brighter grey/white text for readability */
+    color: #0e55e4 !important; /* Brighter grey/white text for readability */
     border-radius: 10px;
 }
 
@@ -86,4 +86,13 @@ h2, label {
 .hover-link:hover {
     color: #f39c12; /* Hover state for links */
     text-decoration: underline !important;
+}
+/* Autofill background ko transparent karne ke liye */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2) inset !important; /* Apne glass theme jaisa dark color */
+    -webkit-text-fill-color: #f3f4f6 !important; /* Text ka color white hi rahega */
+    transition: background-color 5000s ease-in-out 0s;
 }

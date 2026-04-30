@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard, roleGuard } from './auth.service';
 
-// 💡 Note: Upar se baaki saare components ke imports hata dein (Home, Login, etc.)
-// Sirf Guards aur Layouts ko rehne dein agar wo base par chahiye.
+
 
 export const routes: Routes = [
   {
@@ -74,7 +73,12 @@ export const routes: Routes = [
       { 
         path: 'bulkupload', 
         loadComponent: () => import('./bulkupload/bulkupload.component').then(m => m.BulkuploadComponent) 
+      },
+      {
+        path: 'ordersmanagement',
+        loadComponent: () => import('./ordermanagement/ordermanagement.component').then(m => m.OrdermanagementComponent)
       }
+
     ]
   },
 

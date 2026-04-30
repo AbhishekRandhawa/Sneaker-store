@@ -1,164 +1,142 @@
-/* 🚀 Main Wrapper Alignment */
+/* Container Spacing */
 .settings-container {
-  /* 🚀 Navbar se gap badhane ke liye margin-top 50px se 100px-110px kar dein */
-  margin-top: 15px !important; 
-  
-  /* Sidebar ke side mein sahi jagah se shuru karne ke liye padding */
-  padding: 20px 40px; 
-  
-  /* Baki alignment wahi rahegi */
-  margin-left: 0 !important; 
-  max-width: 100%;
-  font-family: 'Poppins', sans-serif;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    padding: 2rem;
+    color: #333;
 }
 
-/* 🚀 Header Card Styling */
+/* Header Styling */
 .settings-header {
-  width: 100%; /* Poori width cover kare */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  background: white;
-  padding: 20px 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
-  
-  /* Premium accent line (Inventory se match karne ke liye) */
-  border-left: 6px solid #1e1b4b; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
 }
 
 .title-area h1 {
-  margin: 0;
-  font-size: 24px;
-  color: #1e293b;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
 }
 
-.title-area p {
-  margin: 5px 0 0;
-  color: #64748b;
-  font-size: 14px;
-}
-
-/* 🚀 Stats Badge Styling */
 .stats-badge {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  padding: 10px 20px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    background: #f3f4f6;
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-.stats-badge .label {
-  font-weight: 600;
-  color: #1e3a8a;
-}
-
-.stats-badge .count {
-  font-size: 20px;
-  font-weight: 800;
-  color: #3b82f6;
-}
-
-/* 🚀 Table Card Styling */
+/* Table Design - Interactive & Modern */
 .table-wrapper {
-  width: 100%; /* Left se start hokar end tak failega */
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    overflow: hidden;
 }
 
 .classic-table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.classic-table thead {
+    background: #f9fafb;
 }
 
 .classic-table th {
-  background: #f8fafc;
-  padding: 15px 20px;
-  text-align: left;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #475569;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  border-bottom: 2px solid #f1f5f9;
+    padding: 15px 20px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.classic-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.classic-table tbody tr:hover {
+    background-color: #f9fafb;
+    transform: scale(1.002);
 }
 
 .classic-table td {
-  padding: 16px 20px;
-  border-bottom: 1px solid #f1f5f9;
-  color: #1e293b;
-  font-size: 14px;
-  vertical-align: middle;
+    padding: 15px 20px;
+    vertical-align: middle;
+    font-size: 0.95rem;
 }
 
+/* User Info Section */
 .user-name {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: #111827;
 }
 
 .avatar {
-  width: 36px;
-  height: 36px;
-  background: #3b82f6;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: bold;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #fca311, #ff7b00);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* Modern Squircle shape */
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(252, 163, 17, 0.3);
 }
 
-/* 🚀 Delete Button Styling */
+/* Location Badge */
+.location-text {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+}
+
+/* Interactive Buttons */
+.add-user-btn {
+    background: #fca311;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-user-btn:hover {
+    background: #e69200;
+    box-shadow: 0 5px 15px rgba(252, 163, 17, 0.4);
+}
+
 .delete-btn {
-  background: #fee2e2;
-  color: #ef4444;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .delete-btn:hover {
-  background: #ef4444;
-  color: white;
-  transform: translateY(-1px);
-}
-
-.no-data {
-  text-align: center;
-  padding: 50px !important;
-  color: #94a3b8;
-  font-style: italic;
-}
-
-/* 🚀 Mobile Optimization */
-@media (max-width: 768px) {
-  .settings-container {
-    padding: 15px;
-  }
-  .settings-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
+    background: #dc2626;
+    color: white;
 }

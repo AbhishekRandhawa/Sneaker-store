@@ -22,7 +22,8 @@ myorder : any[]=[]
 
 
 ngOnInit(){
-  this.myorder = this.orderservice.getOrderHistory().reverse();
+ this.myorder = this.orderservice.getUserOrderHistory().reverse();
+ this.loadMyOrders();
 }
 
 
@@ -43,6 +44,12 @@ Reorder(order: any) {
       this.router.navigate(['/cart']);
     });
   }
+}
+
+loadMyOrders() {
+  // .reverse() lagane se naya order sabse upar dikhega
+  this.myorder = this.orderservice.getUserOrderHistory().reverse(); 
+  console.log("My filtered orders:", this.myorder);
 }
 }
 

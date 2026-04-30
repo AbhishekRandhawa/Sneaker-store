@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class SettingsService {
- 
 
+  constructor(private userservice: UserService) { }
 
-  constructor(private userservice : UserService) { }
-
-  
-
-  getuserlist(){
+  getuserlist() {
     return this.userservice.getregisteredUser();
   }
 
   removeuser(email: string) {
-    let user = this.userservice.getregisteredUser();
-    user = user.filter((u: any) => u.email !== email);
-    localStorage.setItem("registeredUsers", JSON.stringify(user));
+    let users = this.getuserlist();
+    users = users.filter((u: any) => u.email !== email);
+    localStorage.setItem("registeredUsers", JSON.stringify(users));
+  }
 
-}
-
-getTotalUsers() {
-  const users = this.userservice.getregisteredUser();
-  return users.length;
-}
+  addUserByAdmin(newUser: any) {
+    const users = this.getuserlist();
+    const exists = users.find((u: any) => u.email === newUser.email);
+    
+    if (!exists) {
+      users.push(newUser);
+      localStorage.setItem('registeredUsers', JSON.stringify(users));
+      return true;
+    }
+    return false;
+  }
 }

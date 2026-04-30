@@ -5,9 +5,15 @@
       <p>Manage your registered users from here</p>
     </div>
     
-    <div class="stats-badge">
-      <span class="label">Total Registered:</span>
-      <span class="count">{{ allusers.length }}</span>
+    <div class="header-actions">
+      <button class="add-user-btn" (click)="createUserByAdmin()">
+        <span class="plus-icon">+</span> Add New User
+      </button>
+      
+      <div class="stats-badge">
+        <span class="label">Total Registered:</span>
+        <span class="count">{{ allusers.length }}</span>
+      </div>
     </div>
   </div>
 
@@ -24,14 +30,14 @@
       <tbody>
         <tr *ngFor="let user of allusers">
           <td class="user-name">
-            <div class="avatar">{{ user.fullName?.charAt(0) || 'U' }}</div>
-            {{ user.fullName }}
+            <div class="avatar">{{ (user.fullName || user.name)?.charAt(0) || 'U' }}</div>
+            {{ user.fullName || user.name }}
           </td>
           <td>{{ user.email }}</td>
-          <td>{{ user.city || 'N/A' }}</td>
+          <td>{{ user.city || user.address?.city || 'N/A' }}</td>
           <td class="action-cell">
             <button class="delete-btn" (click)="deleteuser(user.email)">
-              <i class="trash-icon"></i> Delete
+              Delete
             </button>
           </td>
         </tr>

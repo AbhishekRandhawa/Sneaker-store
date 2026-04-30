@@ -1,0 +1,85 @@
+<div class="container mt-5 pt-4">
+  <div class="card shadow border-0 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+        <h2 class="fw-bold text-uppercase m-0">📦 Order Management</h2>
+        <span class="badge bg-primary">{{ orders.length }} Total Orders</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Products</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="fw-bold text-primary">#{{ order.orderId }}</td>
+            
+            <td>
+              <div class="fw-bold">{{ order.shippingDetails?.firstName }} {{ order.shippingDetails?.lastName }}</div>
+              <small class="text-muted">{{ order.shippingDetails?.email }}</small>
+            </td>
+
+            <td>
+              <div class="small" *ngFor="let item of order.items">
+                • {{ item.name }} <span class="text-muted">(₹{{item.price}})</span>
+              </div>
+            </td>
+
+            <td class="text-success fw-bold">₹{{ order.total }}</td>
+
+            <td>
+              <span class="badge rounded-pill px-3 py-2" [ngClass]="getBadgeClass(order.status)">
+                {{ order.status }}
+              </span>
+            </td>
+
+            <td>
+              <div class="d-flex gap-2" *ngIf="order.status === 'Pending'">
+                <button 
+                  (click)="changeStatus(order.orderId, 'Approved')" 
+                  class="btn btn-sm btn-success rounded-pill px-3 shadow-sm"
+                  title="Approve">
+                  <i class="bi bi-check-lg me-1"></i> Approve
+                </button>
+
+                <button 
+                  (click)="changeStatus(order.orderId, 'Rejected')" 
+                  class="btn btn-sm btn-danger rounded-pill px-3 shadow-sm"
+                  title="Reject">
+                  <i class="bi bi-x-lg me-1"></i> Reject
+                </button>
+              </div>
+
+              <div *ngIf="order.status === 'Approved'">
+                <button 
+                  (click)="changeStatus(order.orderId, 'Shipped')" 
+                  class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm">
+                  <i class="bi bi-truck me-1"></i> Mark Shipped
+                </button>
+              </div>
+
+              <span *ngIf="order.status === 'Shipped' || order.status === 'Rejected'" class="text-muted small italic">
+                Processed
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="orders.length === 0">
+            <td colspan="6" class="text-center py-5">
+              <i class="bi bi-inbox display-1 text-muted"></i>
+              <h4 class="mt-3 text-secondary">Bhai, abhi tak koi order nahi aaya hai! 👟</h4>
+              <p class="text-muted">User jab checkout karega tab yahan list dikhegi.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
